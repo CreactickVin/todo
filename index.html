@@ -5,36 +5,136 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;700&display=swap" rel="stylesheet">
+
   <title>Todo app</title>
 
   <script>
     function addCard() {
       const canvas = document.querySelector('.show-data-container')
-      const input = document.querySelector('.text')
+      const input = document.querySelector('.user-input-card')
 
-      const element = document.createElement('p')
+      const text = document.createElement('p')
 
-      element.innerText = input.value
+      const crossButton = document.createElement('button')
+      const crossSvg = document.createElement('svg')
+      
+      crossSvg.innerHTML()
 
-      console.log(element)
+      crossButton.appendChild(crossSvg)
+
+      text.innerText = input.value
+
+      canvas.appendChild(text)
+      canvas.appendChild(crossButton)
     }
+
+    function removeCard() {
+      const canvas = document.querySelector('.show-data-container')
+      const firstElement = document.getElementsByTagName('p')[0]
+
+      canvas.removeChild(firstElement)
+    }
+
+
   </script>
 
-  <style></style>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: unset;
+    }
+
+    :root {
+      --primary-bright-blue: hsl(220, 98%, 61%);
+      --background-dark-blue: hsl(235, 21%, 11%);
+      --card-background-very-dark-blue: hsl(235, 24%, 19%);
+      --card-text-light-gray: hsl(234, 39%, 85%);
+      --card-text-light-gray-hover: hsl(236, 33%, 92%);
+      --card-text-dark-gray: hsl(234, 11%, 52%);
+      --card-text-very-dark-gray: hsl(233, 14%, 35%);
+      --card-text-grayish-blue: hsl(237, 14%, 26%);
+    }
+
+    body {
+      background: var(--background-dark-blue);
+      color: var(--card-text-light-gray);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      font-size: 18px;
+    }
+
+    .todo-container {
+      width: 440px;
+      padding: 20px 0;
+    }
+
+    h1 {
+      font-family: 'Josefin Sans', sans-serif;
+      color: white;
+      letter-spacing: 14px;
+      padding: 40px 0;
+    }
+
+    .add-data-container {
+      display: flex;
+      align-items: stretch;
+    }
+
+    input {
+      background: var(--card-background-very-dark-blue);
+      color: var(--card-text-light-gray);
+      width: 100%;
+      padding: 20px;
+      border: none;
+      outline: none;
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: inherit;
+    }
+
+
+    .btn-enter {
+      background-color: var(--card-background-very-dark-blue);
+      color: var(--card-text-light-gray);
+      border: none;
+      padding: 10px;
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 16px;
+    }
+
+    .show-data-container {
+      margin-top: 20px;
+    }
+
+    p {
+      padding: 20px;
+      background: var(--card-background-very-dark-blue);
+      color: var(--card-text-light-gray);
+      overflow-wrap: break-word;
+      width: 400px;
+      font-family: 'Josefin Sans', sans-serif;
+    }
+
+  </style>
 </head>
 <body>
 
 <div class="todo-container">
 
-  <h1> Todo </h1>
+  <h1> TODO </h1>
 
   <div class="add-data-container">
-    <input type="text"/>
-    <button onclick="addCard()"> Enter</button>
+    <input class="user-input-card" type="text"/>
+    <button class="btn-enter" onclick="addCard()">Enter</button>
   </div>
 
   <div class="show-data-container">
   </div>
+  <button class="btn-remove" onclick="removeCard()">Remove</button>
 
 </div>
 <!--  items left-->
