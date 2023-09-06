@@ -12,23 +12,19 @@
   <title>Todo app</title>
 
   <script>
+    let dataOfCard = []
+
     function addCard() {
       const canvas = document.querySelector('.show-data-container')
       const input = document.querySelector('.user-input-card')
 
       const text = document.createElement('p')
+      text.innerText = input.value //gets user input
+      dataOfCard.push(input.value) //pushes the input into the array
 
-      const crossButton = document.createElement('button')
-      const crossSvg = document.createElement('svg')
-      
-      crossSvg.innerHTML()
-
-      crossButton.appendChild(crossSvg)
-
-      text.innerText = input.value
+      localStorage.setItem('Items', JSON.stringify(dataOfCard))
 
       canvas.appendChild(text)
-      canvas.appendChild(crossButton)
     }
 
     function removeCard() {
@@ -54,9 +50,9 @@
       --card-background-very-dark-blue: hsl(235, 24%, 19%);
       --card-text-light-gray: hsl(234, 39%, 85%);
       --card-text-light-gray-hover: hsl(236, 33%, 92%);
-      --card-text-dark-gray: hsl(234, 11%, 52%);
-      --card-text-very-dark-gray: hsl(233, 14%, 35%);
-      --card-text-grayish-blue: hsl(237, 14%, 26%);
+      --dark-gray: hsl(234, 11%, 52%);
+      --very-dark-gray: hsl(233, 14%, 35%);
+      --grayish-blue: hsl(235, 19%, 35%);
     }
 
     body {
@@ -91,6 +87,7 @@
       width: 100%;
       padding: 20px;
       border: none;
+      border-radius: 4px 0 0 4px;
       outline: none;
       font-family: 'Josefin Sans', sans-serif;
       font-size: inherit;
@@ -101,12 +98,16 @@
       background-color: var(--card-background-very-dark-blue);
       color: var(--card-text-light-gray);
       border: none;
+      border-radius: 0 4px 4px 0;
       padding: 10px;
       font-family: 'Josefin Sans', sans-serif;
       font-size: 16px;
     }
 
     .show-data-container {
+      border-radius: 4px 4px 0 0;
+      height:300px;
+      background: var(--card-background-very-dark-blue);
       margin-top: 20px;
     }
 
@@ -116,9 +117,31 @@
       color: var(--card-text-light-gray);
       overflow-wrap: break-word;
       width: 400px;
+      border-bottom: 1px solid var(--very-dark-gray);
       font-family: 'Josefin Sans', sans-serif;
     }
 
+    .footer-card {
+      padding: 16px;
+      background: var(--card-background-very-dark-blue);
+      color: var(--card-text-light-gray);
+      border-radius: 0 0 4px 4px;
+      display: flex;
+      font-family: 'Josefin Sans', sans-serif;
+      justify-content: space-between;
+    }
+
+    .btn-footer-card {
+      border: none;
+      background: var(--card-background-very-dark-blue);
+      color : var(--grayish-blue);
+      font-size: 14px;
+      font-family: 'Josefin Sans', sans-serif;
+    }
+
+    .utility-btn-container {
+      font-weight: 700;
+    }
   </style>
 </head>
 <body>
@@ -134,8 +157,17 @@
 
   <div class="show-data-container">
   </div>
-  <button class="btn-remove" onclick="removeCard()">Remove</button>
+<!--  <button class="btn-remove" onclick="removeCard()">Remove</button>-->
 
+  <div class="footer-card">
+    <span class="items-left"> x items left </span>
+    <div class="utility-btn-container">
+      <button class="btn-footer-card">All</button>
+      <button class="btn-footer-card">Active</button>
+      <button class="btn-footer-card">Completed</button>
+    </div>
+    <button class="btn-footer-card">Clear Completed</button>
+  </div>
 </div>
 <!--  items left-->
 <!--  All-->
