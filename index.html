@@ -11,21 +11,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;700&display=swap" rel="stylesheet">
 
   <title>Todo app</title>
-
-  <script>function addCard() {
-    const text = document.createElement('p')
-    text.innerText = inputField.value //gets user input
-    text.classList.add('card-style')
-    dataOfCard.push(inputField.value) //pushes the input into the array
-    inputField.value = '' //empties the input field
-    localStorage.setItem('Items', JSON.stringify(dataOfCard)) //storing in local storage
-    showData.appendChild(text) //appending current child
-  }
-
-  function removeCard() {
-
-  }</script>
-
+  <script>  let items = []</script>
   <style>
     * {
       margin: 0;
@@ -174,7 +160,7 @@
 
   <div class="show-data-container">
   </div>
-    <button class="btn-remove" onclick="removeCard()">Remove</button>
+  <button class="btn-remove" onclick="removeCard()">Remove</button>
 
   <div class="footer-card">
     <span class="items-left"> x items left </span>
@@ -188,27 +174,39 @@
 </div>
 
 <script>
-  let dataOfCard = JSON.parse(localStorage.getItem('Items'))
-  const showData = document.querySelector('.show-data-container')
 
-  for (const dataOfCardElement of dataOfCard) {
+  const showContainer = document.querySelector('.show-data-container')
+
+  let loadedElements = JSON.parse(localStorage.getItem('Items'))
+  for (const arrayElement of loadedElements) {
     const text = document.createElement('p')
-    text.innerText = dataOfCardElement
+    text.innerText = arrayElement
     text.classList.add('card-style')
-    showData.appendChild(text)
+    showContainer.appendChild(text)
   }
 
-  const inputField = document.querySelector('.user-input')
-  inputField.addEventListener('keypress', function(value) {
-    if (inputField.value !== ' ') {
-      if (value.key === 'Enter') {
-        addCard()
-      }
+  document.querySelector('.user-input').addEventListener('keypress', function(value) {
+    if (value.key === 'Enter') {
+      addCard()
     }
   })
 
+  function addCard() {
+    const text = document.createElement('p')
+    const inputField = document.querySelector('.user-input')
+    text.innerText = inputField.value //gets user input
+    text.classList.add('card-style')
+    items.push(inputField.value) //pushes the input into the array
+    inputField.value = '' //empties the input field
+    showContainer.appendChild(text) //appending current child
+    localStorage.setItem('Items', JSON.stringify(items)) //storing in local storage
+  }
 
-</script>\
+  function removeCard() {
+
+  }
+</script>
+
 
 <!--  items left-->
 <!--  All-->
