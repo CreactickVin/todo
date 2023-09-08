@@ -12,33 +12,19 @@
 
   <title>Todo app</title>
 
-  <script>
-    let dataOfCard = []
+  <script>function addCard() {
+    const text = document.createElement('p')
+    text.innerText = inputField.value //gets user input
+    text.classList.add('card-style')
+    dataOfCard.push(inputField.value) //pushes the input into the array
+    inputField.value = '' //empties the input field
+    localStorage.setItem('Items', JSON.stringify(dataOfCard)) //storing in local storage
+    showData.appendChild(text) //appending current child
+  }
 
-    function addCard() {
-      const canvas = document.querySelector('.show-data-container')
-      const input = document.querySelector('.user-input-card')
+  function removeCard() {
 
-      const text = document.createElement('p')
-      text.innerText = input.value //gets user input
-      dataOfCard.push(input.value) //pushes the input into the array
-
-      input.value = '' //empties the input field
-
-      localStorage.setItem('Items', JSON.stringify(dataOfCard))
-
-      canvas.appendChild(text)
-    }
-
-    function removeCard() { //TODO : add functionality
-      const canvas = document.querySelector('.show-data-container')
-      const firstElement = document.getElementsByTagName('p')[0]
-
-      canvas.removeChild(firstElement)
-    }
-
-
-  </script>
+  }</script>
 
   <style>
     * {
@@ -61,6 +47,7 @@
     body {
       background-image: url("./images/bg-desktop-dark.jpg");
       background-repeat: no-repeat;
+      background-size: 100% 30%;
       background-color: var(--background-dark-blue);
       color: var(--card-text-light-gray);
       height: 100vh;
@@ -117,12 +104,11 @@
 
     .show-data-container {
       border-radius: 4px 4px 0 0;
-      /*height: 300px;*/
       background: var(--card-background-very-dark-blue);
       margin-top: 20px;
     }
 
-    p {
+    .card-style {
       padding: 20px;
       background: var(--card-background-very-dark-blue);
       color: var(--card-text-light-gray);
@@ -140,7 +126,7 @@
       font-family: 'Josefin Sans', sans-serif;
       justify-content: space-between;
     }
-    
+
     .btn-footer-container {
       width: 150px;
       display: flex;
@@ -158,7 +144,7 @@
     .btn-footer:hover {
       color: var(--card-text-light-gray-hover);
     }
-     
+
     .btn-blue {
       color: var(--primary-bright-blue);
     }
@@ -166,46 +152,70 @@
     .utility-btn {
       font-weight: 700;
     }
-    
+
   </style>
 </head>
 
 <body>
 
-  <div class="todo-container">
-
-    <div class="heading-container">
+<div class="todo-container">
+  <div class="heading-container">
     <h1> TODO </h1>
-    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26"><path fill="#FFF" fill-rule="evenodd" d="M13 21a1 1 0 011 1v3a1 1 0 11-2 0v-3a1 1 0 011-1zm-5.657-2.343a1 1 0 010 1.414l-2.121 2.121a1 1 0 01-1.414-1.414l2.12-2.121a1 1 0 011.415 0zm12.728 0l2.121 2.121a1 1 0 01-1.414 1.414l-2.121-2.12a1 1 0 011.414-1.415zM13 8a5 5 0 110 10 5 5 0 010-10zm12 4a1 1 0 110 2h-3a1 1 0 110-2h3zM4 12a1 1 0 110 2H1a1 1 0 110-2h3zm18.192-8.192a1 1 0 010 1.414l-2.12 2.121a1 1 0 01-1.415-1.414l2.121-2.121a1 1 0 011.414 0zm-16.97 0l2.121 2.12A1 1 0 015.93 7.344L3.808 5.222a1 1 0 011.414-1.414zM13 0a1 1 0 011 1v3a1 1 0 11-2 0V1a1 1 0 011-1z"/></svg>
-    </div>
-
-    <div class="add-data-container">
-      <input class="user-input-card" placeholder="Create a new todo..." type="text"/>
-      <button class="btn-enter" onclick="addCard()">Enter</button>
-    </div>
-
-    <div class="show-data-container">
-    </div>
-    <!--  <button class="btn-remove" onclick="removeCard()">Remove</button>-->
-
-    <div class="footer-card">
-      <span class="items-left"> x items left </span>
-      <div class="btn-footer-container">
-        <button class="btn-footer utility-btn btn-blue" name="utility">All</button>
-        <button class="btn-footer utility-btn" name="utility">Active</button>
-        <button class="btn-footer utility-btn" name="utility">Completed</button>
-      </div>
-      <button class="btn-footer">Clear Completed</button>
-    </div>
+    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26">
+      <path fill="#FFF" fill-rule="evenodd"
+            d="M13 21a1 1 0 011 1v3a1 1 0 11-2 0v-3a1 1 0 011-1zm-5.657-2.343a1 1 0 010 1.414l-2.121 2.121a1 1 0 01-1.414-1.414l2.12-2.121a1 1 0 011.415 0zm12.728 0l2.121 2.121a1 1 0 01-1.414 1.414l-2.121-2.12a1 1 0 011.414-1.415zM13 8a5 5 0 110 10 5 5 0 010-10zm12 4a1 1 0 110 2h-3a1 1 0 110-2h3zM4 12a1 1 0 110 2H1a1 1 0 110-2h3zm18.192-8.192a1 1 0 010 1.414l-2.12 2.121a1 1 0 01-1.415-1.414l2.121-2.121a1 1 0 011.414 0zm-16.97 0l2.121 2.12A1 1 0 015.93 7.344L3.808 5.222a1 1 0 011.414-1.414zM13 0a1 1 0 011 1v3a1 1 0 11-2 0V1a1 1 0 011-1z"/>
+    </svg>
   </div>
-  <!--  items left-->
-  <!--  All-->
-  <!--  Active-->
-  <!--  Completed-->
 
-  <!--  Clear Completed-->
+  <div class="add-data-container">
+    <input class="user-input" placeholder="Create a new todo..." type="text"/>
+    <button class="btn-enter" onclick="addCard()">Enter</button>
+  </div>
 
-  <!--  Drag and drop to reorder list-->
+  <div class="show-data-container">
+  </div>
+    <button class="btn-remove" onclick="removeCard()">Remove</button>
+
+  <div class="footer-card">
+    <span class="items-left"> x items left </span>
+    <div class="btn-footer-container">
+      <button class="btn-footer utility-btn btn-blue" name="utility">All</button>
+      <button class="btn-footer utility-btn" name="utility">Active</button>
+      <button class="btn-footer utility-btn" name="utility">Completed</button>
+    </div>
+    <button class="btn-footer">Clear Completed</button>
+  </div>
+</div>
+
+<script>
+  let dataOfCard = JSON.parse(localStorage.getItem('Items'))
+  const showData = document.querySelector('.show-data-container')
+
+  for (const dataOfCardElement of dataOfCard) {
+    const text = document.createElement('p')
+    text.innerText = dataOfCardElement
+    text.classList.add('card-style')
+    showData.appendChild(text)
+  }
+
+  const inputField = document.querySelector('.user-input')
+  inputField.addEventListener('keypress', function(value) {
+    if (inputField.value !== ' ') {
+      if (value.key === 'Enter') {
+        addCard()
+      }
+    }
+  })
+
+
+</script>\
+
+<!--  items left-->
+<!--  All-->
+<!--  Active-->
+<!--  Completed-->
+<!--  Clear Completed-->
+<!--  Drag and drop to reorder list-->
 </body>
 
 </html>
