@@ -65,7 +65,7 @@
       align-items: stretch;
     }
 
-    input {
+    .user-input {
       background: var(--card-background-very-dark-blue);
       color: var(--card-text-light-gray);
       width: 100%;
@@ -101,6 +101,21 @@
       overflow-wrap: break-word;
       border-bottom: 1px solid var(--very-dark-gray);
       font-family: 'Josefin Sans', sans-serif;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .left-card-div {
+      display: flex;
+    }
+
+    .left-card-div > p {
+      margin-left: 10px;
+    }
+
+    .cross-img {
+      height: 18px;
+      width: 18px;
     }
 
     .footer-card {
@@ -139,6 +154,15 @@
       font-weight: 700;
     }
 
+    .footer-suggestion {
+      height: 100px;
+      color: var(--grayish-blue);
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 14px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
   </style>
 </head>
 
@@ -171,7 +195,13 @@
     </div>
     <button class="btn-footer">Clear Completed</button>
   </div>
+
+  <div class="footer-suggestion">
+    <p > Drag and Drop to reorder list </p>
+  </div>
+
 </div>
+
 
 <script>
 
@@ -179,10 +209,24 @@
 
   let loadedElements = JSON.parse(localStorage.getItem('Items'))
   for (const arrayElement of loadedElements) {
+    const card = document.createElement('div') //main card container
+    const left = document.createElement('div') //left card container
+    const checkBox = document.createElement('input')
+    checkBox.setAttribute('type', 'checkbox')
     const text = document.createElement('p')
-    text.innerText = arrayElement
-    text.classList.add('card-style')
-    showContainer.appendChild(text)
+    const cross = document.createElement('img')
+    cross.classList.add('cross-img')
+    cross.setAttribute('src', 'images/icon-cross.svg')
+
+    text.innerText = arrayElement //setting innertext as array element
+    card.classList.add('card-style') //applying card style
+
+    showContainer.appendChild(card) //creating main card container
+    card.appendChild(left) //div -> left
+    left.classList.add('left-card-div')
+    left.appendChild(checkBox) //div -> left -> checkbox
+    left.appendChild(text) //div -> left -> text
+    card.appendChild(cross) // div -> cross
   }
 
   document.querySelector('.user-input').addEventListener('keypress', function(value) {
@@ -192,18 +236,31 @@
   })
 
   function addCard() {
+    const card = document.createElement('div') //main card container
+    const left = document.createElement('div') //left card container
+    const checkBox = document.createElement('input')
+    checkBox.setAttribute('type', 'checkbox')
     const text = document.createElement('p')
+    const cross = document.createElement('img')
+    cross.classList.add('cross-img')
+    cross.setAttribute('src', 'images/icon-cross.svg')
+
     const inputField = document.querySelector('.user-input')
     text.innerText = inputField.value //gets user input
-    text.classList.add('card-style')
+    card.classList.add('card-style')
     items.push(inputField.value) //pushes the input into the array
     inputField.value = '' //empties the input field
-    showContainer.appendChild(text) //appending current child
+
+    showContainer.appendChild(card) //creating main card container
+    card.appendChild(left) //div -> left
+    left.classList.add('left-card-div')
+    left.appendChild(checkBox) //div -> left -> checkbox
+    left.appendChild(text) //div -> left -> text
+    card.appendChild(cross) // div -> cross
     localStorage.setItem('Items', JSON.stringify(items)) //storing in local storage
   }
 
   function removeCard() {
-
   }
 </script>
 
