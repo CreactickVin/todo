@@ -89,9 +89,13 @@
     }
 
     .show-data-container {
-      border-radius: 4px 4px 0 0;
+      border-radius: 4px;
       background: var(--card-background-very-dark-blue);
       margin-top: 20px;
+    }
+
+    .show-data-container:nth-child(1), .show-data-container:nth-last-child(1) {
+      border-radius: 4px;
     }
 
     .card-style {
@@ -163,6 +167,14 @@
       justify-content: center;
       align-items: center;
     }
+    
+    @media only screen and (max-width: 375px){
+      body {
+        margin: 20px;
+        font-size: 14px;
+        background-size: 100% 30%;
+      }
+    }
   </style>
 </head>
 
@@ -184,7 +196,6 @@
 
   <div class="show-data-container">
   </div>
-  <button class="btn-remove" onclick="removeCard()">Remove</button>
 
   <div class="footer-card">
     <span class="items-left"> x items left </span>
@@ -195,6 +206,7 @@
     </div>
     <button class="btn-footer">Clear Completed</button>
   </div>
+<!--  <button class="btn-remove" onclick="removeCard()">Remove</button>-->
 
   <div class="footer-suggestion">
     <p > Drag and Drop to reorder list </p>
