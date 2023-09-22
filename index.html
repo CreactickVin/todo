@@ -11,7 +11,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;700&display=swap" rel="stylesheet">
 
   <title>Todo app</title>
-  <script>  let items = []</script>
+  <script>  let items = [] </script>
   <style>
     * {
       margin: 0;
@@ -41,6 +41,50 @@
       justify-content: center;
       font-size: 18px;
     }
+
+    input[type=checkbox]:checked + p.items-description {
+      text-decoration: line-through;
+      color: var(--very-dark-gray);
+    }
+
+    /* input[type="checkbox"]:checked {*/
+    /*  appearance: none;*/
+    /*  background-image: linear-gradient(*/
+    /*      140deg,*/
+    /*      hsl(206deg 94% 80%) 0%,*/
+    /*      hsl(209deg 100% 77%) 7%,*/
+    /*      hsl(212deg 100% 76%) 16%,*/
+    /*      hsl(218deg 100% 75%) 28%,*/
+    /*      hsl(226deg 100% 76%) 43%,*/
+    /*      hsl(238deg 100% 78%) 61%,*/
+    /*      hsl(255deg 89% 74%) 99%);*/
+    /*  font: inherit;*/
+    /*  color: currentColor;*/
+    /*  width: 1em;*/
+    /*  height: 1em;*/
+    /*  border-radius: 1em;*/
+    /*  transform: translateY(-0.075em);*/
+    /*}*/
+
+
+    /*input[type="checkbox"]:hover,input[type="checkbox"]:active {*/
+    /*  background: linear-gradient(hsl(235, 24%, 19%), hsl(235, 24%, 19%)) padding-box,*/
+    /*  linear-gradient(*/
+    /*      140deg,*/
+    /*      hsl(206deg 94% 80%) 0%,*/
+    /*      hsl(209deg 100% 77%) 7%,*/
+    /*      hsl(212deg 100% 76%) 16%,*/
+    /*      hsl(218deg 100% 75%) 28%,*/
+    /*      hsl(226deg 100% 76%) 43%,*/
+    /*      hsl(238deg 100% 78%) 61%,*/
+    /*      hsl(255deg 89% 74%) 99%*/
+    /*  ) border-box;*/
+    /*  box-sizing: border-box;*/
+    /*  height: 18px;*/
+    /*  width: 18px;*/
+    /*  border-radius: 18px;*/
+    /*  border: 1px solid transparent;*/
+    /*}*/
 
     .todo-container {
       width: 480px;
@@ -76,7 +120,6 @@
       font-family: 'Josefin Sans', sans-serif;
       font-size: 17px;
     }
-
 
     .btn-enter {
       background-color: var(--card-background-very-dark-blue);
@@ -167,8 +210,8 @@
       justify-content: center;
       align-items: center;
     }
-    
-    @media only screen and (max-width: 375px){
+
+    @media only screen and (max-width: 375px) {
       body {
         margin: 20px;
         font-size: 14px;
@@ -198,18 +241,17 @@
   </div>
 
   <div class="footer-card">
-    <span class="items-left"> x items left </span>
+    <span class="items-left"> <span class="count-items-left">x</span> items left </span>
     <div class="btn-footer-container">
-      <button class="btn-footer utility-btn btn-blue" name="utility">All</button>
-      <button class="btn-footer utility-btn" name="utility">Active</button>
-      <button class="btn-footer utility-btn" name="utility">Completed</button>
+      <button class="btn-footer utility-btn btn-blue">All</button>
+      <button class="btn-footer utility-btn" onclick="checkActive()">Active</button>
+      <button class="btn-footer utility-btn" >Completed</button>
     </div>
     <button class="btn-footer">Clear Completed</button>
   </div>
-<!--  <button class="btn-remove" onclick="removeCard()">Remove</button>-->
 
   <div class="footer-suggestion">
-    <p > Drag and Drop to reorder list </p>
+    <p> Drag and Drop to reorder list </p>
   </div>
 
 </div>
@@ -224,13 +266,18 @@
     const card = document.createElement('div') //main card container
     const left = document.createElement('div') //left card container
     const checkBox = document.createElement('input')
+
     checkBox.setAttribute('type', 'checkbox')
+    checkBox.setAttribute('todo-id', arrayElement.id)
+
     const text = document.createElement('p')
+    text.classList.add('items-description')
+
     const cross = document.createElement('img')
     cross.classList.add('cross-img')
     cross.setAttribute('src', 'images/icon-cross.svg')
 
-    text.innerText = arrayElement //setting innertext as array element
+    text.innerText = arrayElement.title //setting inner-text as array element
     card.classList.add('card-style') //applying card style
 
     showContainer.appendChild(card) //creating main card container
@@ -239,6 +286,35 @@
     left.appendChild(checkBox) //div -> left -> checkbox
     left.appendChild(text) //div -> left -> text
     card.appendChild(cross) // div -> cross
+  }
+
+  const checkboxes = document.querySelectorAll('input[type=checkbox]')
+  for (const checkElement of checkboxes) {
+    checkElement.addEventListener('click', function(element) {
+      const idPlace = parseInt(element.target.getAttribute('todo-id'))
+
+      if (element.target.checked) { //for checked
+        let loadedElements = JSON.parse(localStorage.getItem('Items'))
+
+        for (const loaded of loadedElements) {
+          if (loaded.id === idPlace) {  // Change isActive to false, isCompleted to true
+            loaded.isActive = false
+            loaded.isCompleted = true
+          }
+        }
+        localStorage.setItem('Items', JSON.stringify(loadedElements))
+      } else {
+        let loadedElements = JSON.parse(localStorage.getItem('Items'))
+
+        for (const loaded of loadedElements) {
+          if (loaded.id === idPlace) {  // Change isActive to true , isCompleted to false
+            loaded.isActive = true
+            loaded.isCompleted = false
+          }
+        }
+        localStorage.setItem('Items', JSON.stringify(loadedElements))
+      }
+    });
   }
 
   document.querySelector('.user-input').addEventListener('keypress', function(value) {
@@ -252,7 +328,10 @@
     const left = document.createElement('div') //left card container
     const checkBox = document.createElement('input')
     checkBox.setAttribute('type', 'checkbox')
+
     const text = document.createElement('p')
+    text.classList.add('items-description')
+
     const cross = document.createElement('img')
     cross.classList.add('cross-img')
     cross.setAttribute('src', 'images/icon-cross.svg')
@@ -260,7 +339,12 @@
     const inputField = document.querySelector('.user-input')
     text.innerText = inputField.value //gets user input
     card.classList.add('card-style')
-    items.push(inputField.value) //pushes the input into the array
+    items.push({
+      id: Date.now(),
+      title: inputField.value,
+      isActive: true,
+      isCompleted: false
+    }) //pushes the input into the array
     inputField.value = '' //empties the input field
 
     showContainer.appendChild(card) //creating main card container
@@ -272,8 +356,25 @@
     localStorage.setItem('Items', JSON.stringify(items)) //storing in local storage
   }
 
-  function removeCard() {
+  function checkActive() {
+    console.log("active function called")
+    let loadedElements = JSON.parse(localStorage.getItem('Items'))
+    const checkboxes = document.querySelectorAll('input[type=checkbox]')
+    console.log("loaded Elements", loadedElements)
+    console.log("checkboxes", checkboxes)
+
+    let i=0
+    for (const loaded in loadedElements) {
+      if (loaded.isActive === false) {
+        console.log("specific checkbox", checkboxes[i])
+          // checkboxes[loaded].style.display = 'none'
+      }
+      i++
+    }
+
   }
+
+
 </script>
 
 
