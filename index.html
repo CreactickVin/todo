@@ -2,16 +2,18 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;700&display=swap" rel="stylesheet" />
 
   <title>Todo app</title>
-  <script>  let items = [] </script>
+  <script>
+    let items = [];
+  </script>
   <style>
     * {
       margin: 0;
@@ -42,7 +44,6 @@
       font-size: 18px;
     }
 
-
     /* input[type="checkbox"]:checked {*/
     /*  appearance: none;*/
     /*  background-image: linear-gradient(*/
@@ -61,7 +62,6 @@
     /*  border-radius: 1em;*/
     /*  transform: translateY(-0.075em);*/
     /*}*/
-
 
     /*input[type="checkbox"]:hover,input[type="checkbox"]:active {*/
     /*  background: linear-gradient(hsl(235, 24%, 19%), hsl(235, 24%, 19%)) padding-box,*/
@@ -94,7 +94,7 @@
     }
 
     h1 {
-      font-family: 'Josefin Sans', sans-serif;
+      font-family: "Josefin Sans", sans-serif;
       color: white;
       letter-spacing: 14px;
       padding: 40px 0;
@@ -113,7 +113,7 @@
       border: none;
       border-radius: 4px 0 0 4px;
       outline: none;
-      font-family: 'Josefin Sans', sans-serif;
+      font-family: "Josefin Sans", sans-serif;
       font-size: 17px;
     }
 
@@ -123,7 +123,7 @@
       border: none;
       border-radius: 0 4px 4px 0;
       padding: 10px;
-      font-family: 'Josefin Sans', sans-serif;
+      font-family: "Josefin Sans", sans-serif;
       font-size: 16px;
     }
 
@@ -133,7 +133,8 @@
       margin-top: 20px;
     }
 
-    .show-data-container:nth-child(1), .show-data-container:nth-last-child(1) {
+    .show-data-container:nth-child(1),
+    .show-data-container:nth-last-child(1) {
       border-radius: 4px;
     }
 
@@ -143,7 +144,7 @@
       color: var(--card-text-light-gray);
       overflow-wrap: break-word;
       border-bottom: 1px solid var(--very-dark-gray);
-      font-family: 'Josefin Sans', sans-serif;
+      font-family: "Josefin Sans", sans-serif;
       display: flex;
       justify-content: space-between;
     }
@@ -152,7 +153,7 @@
       display: flex;
     }
 
-    .left-card-div > p {
+    .left-card-div>p {
       margin-left: 10px;
     }
 
@@ -167,7 +168,7 @@
       color: var(--card-text-light-gray);
       border-radius: 0 0 4px 4px;
       display: flex;
-      font-family: 'Josefin Sans', sans-serif;
+      font-family: "Josefin Sans", sans-serif;
       justify-content: space-between;
     }
 
@@ -182,7 +183,7 @@
       background: var(--card-background-very-dark-blue);
       color: var(--grayish-blue);
       font-size: 13px;
-      font-family: 'Josefin Sans', sans-serif;
+      font-family: "Josefin Sans", sans-serif;
     }
 
     .btn-footer:hover {
@@ -200,7 +201,7 @@
     .footer-suggestion {
       height: 100px;
       color: var(--grayish-blue);
-      font-family: 'Josefin Sans', sans-serif;
+      font-family: "Josefin Sans", sans-serif;
       font-size: 14px;
       display: flex;
       justify-content: center;
@@ -218,182 +219,210 @@
 </head>
 
 <body>
-
-<div class="todo-container">
-  <div class="heading-container">
-    <h1> TODO </h1>
-    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26">
-      <path fill="#FFF" fill-rule="evenodd"
-            d="M13 21a1 1 0 011 1v3a1 1 0 11-2 0v-3a1 1 0 011-1zm-5.657-2.343a1 1 0 010 1.414l-2.121 2.121a1 1 0 01-1.414-1.414l2.12-2.121a1 1 0 011.415 0zm12.728 0l2.121 2.121a1 1 0 01-1.414 1.414l-2.121-2.12a1 1 0 011.414-1.415zM13 8a5 5 0 110 10 5 5 0 010-10zm12 4a1 1 0 110 2h-3a1 1 0 110-2h3zM4 12a1 1 0 110 2H1a1 1 0 110-2h3zm18.192-8.192a1 1 0 010 1.414l-2.12 2.121a1 1 0 01-1.415-1.414l2.121-2.121a1 1 0 011.414 0zm-16.97 0l2.121 2.12A1 1 0 015.93 7.344L3.808 5.222a1 1 0 011.414-1.414zM13 0a1 1 0 011 1v3a1 1 0 11-2 0V1a1 1 0 011-1z"/>
-    </svg>
-  </div>
-
-  <div class="add-data-container">
-    <input class="user-input" placeholder="Create a new todo..." type="text"/>
-    <button class="btn-enter" onclick="addCard()">Enter</button>
-  </div>
-
-  <div class="show-data-container">
-  </div>
-
-  <div class="footer-card">
-    <span class="items-left"> <span class="count-items-left">x</span> items left </span>
-    <div class="btn-footer-container">
-      <button class="btn-footer utility-btn btn-blue">All</button>
-      <button class="btn-footer utility-btn" onclick="checkActive()">Active</button>
-      <button class="btn-footer utility-btn">Completed</button>
+  <div class="todo-container">
+    <div class="heading-container">
+      <h1>TODO</h1>
+      <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26">
+        <path fill="#FFF" fill-rule="evenodd"
+          d="M13 21a1 1 0 011 1v3a1 1 0 11-2 0v-3a1 1 0 011-1zm-5.657-2.343a1 1 0 010 1.414l-2.121 2.121a1 1 0 01-1.414-1.414l2.12-2.121a1 1 0 011.415 0zm12.728 0l2.121 2.121a1 1 0 01-1.414 1.414l-2.121-2.12a1 1 0 011.414-1.415zM13 8a5 5 0 110 10 5 5 0 010-10zm12 4a1 1 0 110 2h-3a1 1 0 110-2h3zM4 12a1 1 0 110 2H1a1 1 0 110-2h3zm18.192-8.192a1 1 0 010 1.414l-2.12 2.121a1 1 0 01-1.415-1.414l2.121-2.121a1 1 0 011.414 0zm-16.97 0l2.121 2.12A1 1 0 015.93 7.344L3.808 5.222a1 1 0 011.414-1.414zM13 0a1 1 0 011 1v3a1 1 0 11-2 0V1a1 1 0 011-1z" />
+      </svg>
     </div>
-    <button class="btn-footer">Clear Completed</button>
+
+    <div class="add-data-container">
+      <input class="user-input" placeholder="Create a new todo..." type="text" />
+      <button class="btn-enter" onclick="addCard()">Enter</button>
+    </div>
+
+    <div class="show-data-container"></div>
+
+    <div class="footer-card">
+      <span class="items-left">
+        <span class="count-items-left">x</span> items left
+      </span>
+      <div class="btn-footer-container">
+        <button class="btn-footer utility-btn btn-blue">All</button>
+        <button class="btn-footer utility-btn" onclick="checkActive()">
+          Active
+        </button>
+        <button class="btn-footer utility-btn">Completed</button>
+      </div>
+      <button class="btn-footer">Clear Completed</button>
+    </div>
+
+    <div class="footer-suggestion">
+      <p>Drag and Drop to reorder list</p>
+    </div>
   </div>
 
-  <div class="footer-suggestion">
-    <p> Drag and Drop to reorder list </p>
-  </div>
+  <script>
+    const showContainer = document.querySelector(".show-data-container");
 
-</div>
+    let loadedElements = JSON.parse(localStorage.getItem("Items"));
 
+    // fetches "items" from local storage and places it again on refresh
 
-<script>
+    for (const arrayElement of loadedElements) {
+      const card = document.createElement("div"); //main card container
+      const left = document.createElement("div"); //left card container
+      const checkBox = document.createElement("input");
 
-  const showContainer = document.querySelector('.show-data-container')
+      checkBox.setAttribute("type", "checkbox");
+      checkBox.setAttribute("todo-id", arrayElement.id);
 
-  let loadedElements = JSON.parse(localStorage.getItem('Items'))
+      const text = document.createElement("p");
+      text.classList.add("items-description");
 
-  //fetches "items" from local storage and places it again on refresh
-  for (const arrayElement of loadedElements) {
-    const card = document.createElement('div') //main card container
-    const left = document.createElement('div') //left card container
-    const checkBox = document.createElement('input')
+      const cross = document.createElement("img");
+      cross.classList.add("cross-img");
+      cross.setAttribute("src", "images/icon-cross.svg");
 
-    checkBox.setAttribute('type', 'checkbox')
-    checkBox.setAttribute('todo-id', arrayElement.id)
+      text.innerText = arrayElement.title; //setting inner-text as array element
+      card.classList.add("card-style"); //applying card style
 
-    const text = document.createElement('p')
-    text.classList.add('items-description')
-
-    const cross = document.createElement('img')
-    cross.classList.add('cross-img')
-    cross.setAttribute('src', 'images/icon-cross.svg')
-
-    text.innerText = arrayElement.title //setting inner-text as array element
-    card.classList.add('card-style') //applying card style
-
-    showContainer.appendChild(card) //creating main card container
-    card.appendChild(left) //div -> left
-    left.classList.add('left-card-div')
-    left.appendChild(checkBox) //div -> left -> checkbox
-    left.appendChild(text) //div -> left -> text
-    card.appendChild(cross) // div -> cross
-  }
-
-
-  //updates Items value in local storage for checked &  unchecked checkbox
-  const checkboxes = document.querySelectorAll('input[type=checkbox]')
-  for (const checkElement of checkboxes) {
-    checkElement.addEventListener('click', function(element) {
-      const idPlace = parseInt(element.target.getAttribute('todo-id'))
-
-      if (element.target.checked) { //for checked
-        let loadedElements = JSON.parse(localStorage.getItem('Items'))
-
-        for (const loaded of loadedElements) {
-          if (loaded.id === idPlace) {  // Change isActive to false, isCompleted to true
-            loaded.isActive = false
-            loaded.isCompleted = true
-          }
-        }
-        localStorage.setItem('Items', JSON.stringify(loadedElements))
-      } else {
-        let loadedElements = JSON.parse(localStorage.getItem('Items'))
-
-        for (const loaded of loadedElements) {
-          if (loaded.id === idPlace) {  // Change isActive to true , isCompleted to false
-            loaded.isActive = true
-            loaded.isCompleted = false
-          }
-        }
-        localStorage.setItem('Items', JSON.stringify(loadedElements))
-      }
-    });
-  }
-
-  document.querySelector('.user-input').addEventListener('keypress', function(value) {
-    if (value.key === 'Enter') {
-      addCard()
+      showContainer.appendChild(card); //creating main card container
+      card.appendChild(left); //div -> left
+      left.classList.add("left-card-div");
+      left.appendChild(checkBox); //div -> left -> checkbox
+      left.appendChild(text); //div -> left -> text
+      card.appendChild(cross); // div -> cross
     }
-  })
 
-  function addCard() {
-    let loadedElements = JSON.parse(localStorage.getItem('Items'))
+    //updates Items value in local storage for checked &  unchecked checkbox
+    const checkboxes = document.querySelectorAll("input[type=checkbox]");
+    for (const checkElement of checkboxes) {
+      checkElement.addEventListener("click", function (element) {
+        const idPlace = parseInt(element.target.getAttribute("todo-id"));
 
-    const card = document.createElement('div') //main card container
-    const left = document.createElement('div') //left card container
-    const checkBox = document.createElement('input')
-    checkBox.setAttribute('type', 'checkbox')
-    checkBox.setAttribute('todo-id', String(Date.now()))
+        if (element.target.checked) {
+          //for checked
+          let loadedElements = JSON.parse(localStorage.getItem("Items"));
 
-    const text = document.createElement('p')
-    text.classList.add('items-description')
+          for (const loaded of loadedElements) {
+            if (loaded.id === idPlace) {
+              // Change isActive to false, isCompleted to true
+              loaded.isActive = false;
+              loaded.isCompleted = true;
+            }
+          }
+          localStorage.setItem("Items", JSON.stringify(loadedElements));
+        } else {
+          let loadedElements = JSON.parse(localStorage.getItem("Items"));
 
-    const cross = document.createElement('img')
-    cross.classList.add('cross-img')
-    cross.setAttribute('src', 'images/icon-cross.svg')
+          for (const loaded of loadedElements) {
+            if (loaded.id === idPlace) {
+              // Change isActive to true , isCompleted to false
+              loaded.isActive = true;
+              loaded.isCompleted = false;
+            }
+          }
+          localStorage.setItem("Items", JSON.stringify(loadedElements));
+        }
+      });
+    }
 
-    const inputField = document.querySelector('.user-input')
-    text.innerText = inputField.value //gets user input
-    card.classList.add('card-style')
-    items.push({
-      id: Date.now(),
-      title: inputField.value,
-      isActive: true,
-      isCompleted: false
-    }) //pushes the input into the array
-    inputField.value = '' //empties the input field
+    document
+      .querySelector(".user-input")
+      .addEventListener("keypress", function (value) {
+        if (value.key === "Enter") {
+          addCard();
+        }
+      });
 
-    showContainer.appendChild(card) //creating main card container
-    card.appendChild(left) //div -> left
-    left.classList.add('left-card-div')
-    left.appendChild(checkBox) //div -> left -> checkbox
-    left.appendChild(text) //div -> left -> text
-    card.appendChild(cross) // div -> cross
-    localStorage.setItem('Items', JSON.stringify(items)) //storing in local storage
-  }
+    //adds strikethrough to checked values
+    for (const checkElement of checkboxes) {
+      checkElement.addEventListener(
+        "change",
+        function handleStrikeThrough(element) {
+          let loadedElements = JSON.parse(localStorage.getItem("Items"));
 
+          for (const arrayElement of loadedElements) {
+            if (arrayElement.isActive === false || element.checked === true) {
+              console.log(
+                "its just log",
+                document.querySelector(`[todo-id='${arrayElement.id}']`)
+              );
+              checkBox = document.querySelector(
+                `[todo-id='${arrayElement.id}']`
+              );
+              cardText = checkBox.nextSibling;
+              cardText.style.textDecoration = "line-through";
+              cardText.style.color = `var(--grayish-blue)`;
+            } else {
+              checkBox = document.querySelector(
+                `[todo-id='${arrayElement.id}']`
+              );
+              cardText = checkBox.nextSibling;
+              cardText.style.textDecoration = "none";
+              cardText.style.color = "white";
+            }
+          }
+        }
+      );
+    }
 
+    function addCard() {
+      let loadedElements = JSON.parse(localStorage.getItem("Items"));
 
+      const card = document.createElement("div"); //main card container
+      const left = document.createElement("div"); //left card container
+      const checkBox = document.createElement("input");
+      checkBox.setAttribute("type", "checkbox");
+      checkBox.setAttribute("todo-id", String(Date.now()));
 
+      const text = document.createElement("p");
+      text.classList.add("items-description");
 
+      const cross = document.createElement("img");
+      cross.classList.add("cross-img");
+      cross.setAttribute("src", "images/icon-cross.svg");
 
-  // function checkActive() {
-  //   let loadedElements = JSON.parse(localStorage.getItem('Items'))
-  //   const checkboxes = document.querySelectorAll('input[type=checkbox]')
-  //   console.log('loaded Elements', loadedElements)
-  //   console.log('checkboxes', checkboxes)
-  //
-  //   // for (const loaded in loadedElements) {
-  //   //   console.log("elements that are false with isactive state:", (loadedElements[loaded].isActive === false))
-  //   //
-  //   //   // if (loadedElements[loaded].isActive === false) {
-  //   //   //     console.log("hidden checkbox", checkboxes[loaded])
-  //   //   //     checkboxes[loaded].style.display = 'none'
-  //   //   // } else {
-  //   //   //   console.log("on checkbox", checkboxes[loaded])
-  //   //   //   checkboxes[loaded].style.display = 'initial'
-  //   //   // }
-  //   // }
-  //
-  // }
+      const inputField = document.querySelector(".user-input");
+      text.innerText = inputField.value; //gets user input
+      card.classList.add("card-style");
+      items.push({
+        id: Date.now(),
+        title: inputField.value,
+        isActive: true,
+        isCompleted: false,
+      }); //pushes the input into the array
+      inputField.value = ""; //empties the input field
 
+      showContainer.appendChild(card); //creating main card container
+      card.appendChild(left); //div -> left
+      left.classList.add("left-card-div");
+      left.appendChild(checkBox); //div -> left -> checkbox
+      left.appendChild(text); //div -> left -> text
+      card.appendChild(cross); // div -> cross
+      localStorage.setItem("Items", JSON.stringify(items)); //storing in local storage
+    }
 
-</script>
+    // function checkActive() {
+    //   let loadedElements = JSON.parse(localStorage.getItem('Items'))
+    //   const checkboxes = document.querySelectorAll('input[type=checkbox]')
+    //   console.log('loaded Elements', loadedElements)
+    //   console.log('checkboxes', checkboxes)
+    //
+    //   // for (const loaded in loadedElements) {
+    //   //   console.log("elements that are false with isactive state:", (loadedElements[loaded].isActive === false))
+    //   //
+    //   //   // if (loadedElements[loaded].isActive === false) {
+    //   //   //     console.log("hidden checkbox", checkboxes[loaded])
+    //   //   //     checkboxes[loaded].style.display = 'none'
+    //   //   // } else {
+    //   //   //   console.log("on checkbox", checkboxes[loaded])
+    //   //   //   checkboxes[loaded].style.display = 'initial'
+    //   //   // }
+    //   // }
+    //
+    // }
+  </script>
 
-
-<!--  items left-->
-<!--  All-->
-<!--  Active-->
-<!--  Completed-->
-<!--  Clear Completed-->
-<!--  Drag and drop to reorder list-->
+  <!--  items left-->
+  <!--  All-->
+  <!--  Active-->
+  <!--  Completed-->
+  <!--  Clear Completed-->
+  <!--  Drag and drop to reorder list-->
 </body>
 
 </html>
