@@ -42,10 +42,6 @@
       font-size: 18px;
     }
 
-    input[type=checkbox]:checked + p.items-description {
-      text-decoration: line-through;
-      color: var(--very-dark-gray);
-    }
 
     /* input[type="checkbox"]:checked {*/
     /*  appearance: none;*/
@@ -245,7 +241,7 @@
     <div class="btn-footer-container">
       <button class="btn-footer utility-btn btn-blue">All</button>
       <button class="btn-footer utility-btn" onclick="checkActive()">Active</button>
-      <button class="btn-footer utility-btn" >Completed</button>
+      <button class="btn-footer utility-btn">Completed</button>
     </div>
     <button class="btn-footer">Clear Completed</button>
   </div>
@@ -262,6 +258,8 @@
   const showContainer = document.querySelector('.show-data-container')
 
   let loadedElements = JSON.parse(localStorage.getItem('Items'))
+
+  //fetches "items" from local storage and places it again on refresh
   for (const arrayElement of loadedElements) {
     const card = document.createElement('div') //main card container
     const left = document.createElement('div') //left card container
@@ -288,6 +286,8 @@
     card.appendChild(cross) // div -> cross
   }
 
+
+  //updates Items value in local storage for checked &  unchecked checkbox
   const checkboxes = document.querySelectorAll('input[type=checkbox]')
   for (const checkElement of checkboxes) {
     checkElement.addEventListener('click', function(element) {
@@ -324,10 +324,13 @@
   })
 
   function addCard() {
+    let loadedElements = JSON.parse(localStorage.getItem('Items'))
+
     const card = document.createElement('div') //main card container
     const left = document.createElement('div') //left card container
     const checkBox = document.createElement('input')
     checkBox.setAttribute('type', 'checkbox')
+    checkBox.setAttribute('todo-id', String(Date.now()))
 
     const text = document.createElement('p')
     text.classList.add('items-description')
@@ -356,23 +359,30 @@
     localStorage.setItem('Items', JSON.stringify(items)) //storing in local storage
   }
 
-  function checkActive() {
-    console.log("active function called")
-    let loadedElements = JSON.parse(localStorage.getItem('Items'))
-    const checkboxes = document.querySelectorAll('input[type=checkbox]')
-    console.log("loaded Elements", loadedElements)
-    console.log("checkboxes", checkboxes)
 
-    let i=0
-    for (const loaded in loadedElements) {
-      if (loaded.isActive === false) {
-        console.log("specific checkbox", checkboxes[i])
-          // checkboxes[loaded].style.display = 'none'
-      }
-      i++
-    }
 
-  }
+
+
+
+  // function checkActive() {
+  //   let loadedElements = JSON.parse(localStorage.getItem('Items'))
+  //   const checkboxes = document.querySelectorAll('input[type=checkbox]')
+  //   console.log('loaded Elements', loadedElements)
+  //   console.log('checkboxes', checkboxes)
+  //
+  //   // for (const loaded in loadedElements) {
+  //   //   console.log("elements that are false with isactive state:", (loadedElements[loaded].isActive === false))
+  //   //
+  //   //   // if (loadedElements[loaded].isActive === false) {
+  //   //   //     console.log("hidden checkbox", checkboxes[loaded])
+  //   //   //     checkboxes[loaded].style.display = 'none'
+  //   //   // } else {
+  //   //   //   console.log("on checkbox", checkboxes[loaded])
+  //   //   //   checkboxes[loaded].style.display = 'initial'
+  //   //   // }
+  //   // }
+  //
+  // }
 
 
 </script>
