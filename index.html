@@ -330,9 +330,7 @@
 
     //adds strikethrough to checked values
     for (const checkElement of checkboxes) {
-      checkElement.addEventListener(
-        "change",
-        function handleStrikeThrough(element) {
+      checkElement.addEventListener("change", function handleStrikeThrough(element) {
           let loadedElements = JSON.parse(localStorage.getItem("Items"));
 
           for (const arrayElement of loadedElements) {
@@ -354,6 +352,37 @@
               cardText = checkBox.nextSibling;
               cardText.style.textDecoration = "none";
               cardText.style.color = "white";
+            }
+          }
+        }
+      );
+    }
+
+    for (const checkElement of checkboxes) {
+      window.addEventListener("load", function handleStrikeThrough(element) {
+          let loadedElements = JSON.parse(localStorage.getItem("Items"));
+
+          for (const arrayElement of loadedElements) {
+            if (arrayElement.isActive === false || element.checked === true) {
+              console.log(
+                "its just log",
+                document.querySelector(`[todo-id='${arrayElement.id}']`)
+              );
+              checkBox = document.querySelector(
+                `[todo-id='${arrayElement.id}']`
+              );
+              cardText = checkBox.nextSibling;
+              cardText.style.textDecoration = "line-through";
+              cardText.style.color = `var(--grayish-blue)`;
+              checkBox.checked = true
+            } else {
+              checkBox = document.querySelector(
+                `[todo-id='${arrayElement.id}']`
+              );
+              cardText = checkBox.nextSibling;
+              cardText.style.textDecoration = "none";
+              cardText.style.color = "white";
+              checkBox.checked = false
             }
           }
         }
