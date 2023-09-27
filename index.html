@@ -82,7 +82,7 @@
     /*  border: 1px solid transparent;*/
     /*}*/
 
-    .todo-container {
+    .container {
       width: 480px;
       padding: 20px 0;
     }
@@ -127,14 +127,14 @@
       font-size: 16px;
     }
 
-    .show-data-container {
+    .todo-container {
       border-radius: 4px;
       background: var(--card-background-very-dark-blue);
       margin-top: 20px;
     }
 
-    .show-data-container:nth-child(1),
-    .show-data-container:nth-last-child(1) {
+    .todo-container:nth-child(1),
+    .todo-container:nth-last-child(1) {
       border-radius: 4px;
     }
 
@@ -219,7 +219,7 @@
 </head>
 
 <body>
-<div class="todo-container">
+<div class="container">
   <div class="heading-container">
     <h1>TODO</h1>
     <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26">
@@ -233,7 +233,7 @@
     <button class="btn-enter" onclick="addCard()">Enter</button>
   </div>
 
-  <div class="show-data-container"></div>
+  <div class="todo-container"></div>
 
   <div class="footer-card">
       <span class="items-left">
@@ -255,19 +255,19 @@
 </div>
 
 <script>
-  const showContainer = document.querySelector('.show-data-container')
+  const showContainer = document.querySelector('.todo-container')
 
-  let loadedElements = JSON.parse(localStorage.getItem('Items'))
+  let todos = getTodos()
 
   // fetches "items" from local storage and places it again on refresh
 
-  for (const arrayElement of loadedElements) {
+  for (const item of todos) {
     const card = document.createElement('div') //main card container
     const left = document.createElement('div') //left card container
     const checkBox = document.createElement('input')
 
     checkBox.setAttribute('type', 'checkbox')
-    checkBox.setAttribute('todo-id', arrayElement.id)
+    checkBox.setAttribute('todo-id', item.id)
 
     const text = document.createElement('p')
     text.classList.add('items-description')
@@ -276,7 +276,7 @@
     cross.classList.add('cross-img')
     cross.setAttribute('src', 'images/icon-cross.svg')
 
-    text.innerText = arrayElement.title //setting inner-text as array element
+    text.innerText = item.title //setting inner-text as array element
     card.classList.add('card-style') //applying card style
 
     showContainer.appendChild(card) //creating main card container
@@ -290,38 +290,38 @@
   //initial items-left count
   itemsLeftAll()
 
-  // const showDataContainer = document.querySelector('.show-data-container')
-  function itemsLeftActive() {
-    let loadedElements = JSON.parse(localStorage.getItem('Items'))
-    let count = 0
-    for (const element in loadedElements) {
-      console.log('element.isActive is=', loadedElements[element].isActive)
-      if (loadedElements[element].isActive) {
-        count++
-      }
-    }
-    document.querySelector('.count-items-left').innerText = count
-    console.log('now count is = ', count)
-  }
+  // const showDataContainer = document.querySelector('.todo-container')
+  // function itemsLeftActive() {
+  //   getTodos()
+  //   let count = 0
+  //   for (const element in loadedElements) {
+  //     console.log('element.isActive is=', loadedElements[element].isActive)
+  //     if (loadedElements[element].isActive) {
+  //       count++
+  //     }
+  //   }
+  //   document.querySelector('.count-items-left').innerText = count
+  //   console.log('now count is = ', count)
+  // }
 
   //updates Items value in local storage for checked &  unchecked checkbox
   const checkboxes = document.querySelectorAll('input[type=checkbox]')
   for (const checkElement of checkboxes) {
     checkElement.addEventListener('click', function(element) {
+      let isChecked = element.target.checked
       const idPlace = parseInt(element.target.getAttribute('todo-id'))
 
-        let loadedElements = JSON.parse(localStorage.getItem('Items'))
+      getTodos()
 
-        for (const loaded of loadedElements) {
-          if (loaded.id === idPlace) {
-            // Change isActive to false, isCompleted to true
-            loaded.isActive = element.target.checked
-            loaded.isCompleted = true
-          }
+      for (const loaded in loadedElements) {
+        if (loadedElements[loaded].id === idPlace) {
+          // Change isActive to false, isCompleted to true
+          loadedElements[loaded].isActive = !(isChecked)
+          loadedElements[loaded].isCompleted = (isChecked)
         }
+      }
 
-        localStorage.setItem('Items', JSON.stringify(loadedElements))
-        itemsLeftActive()
+      setTodos(loadedElements)
     })
   }
 
@@ -332,8 +332,8 @@
   })
 
   //adds strikethrough to checked values
-  for (const checkElement of checkboxes) {
-    checkElement.addEventListener('change', function(element) {
+  for (const checkbx of checkboxes) {
+    checkbx.addEventListener('change', function(element) {
           let loadedElements = JSON.parse(localStorage.getItem('Items'))
 
           for (const arrayElement of loadedElements) {
@@ -355,18 +355,18 @@
 
   for (const checkElement of checkboxes) {
     window.addEventListener('load', function(element) {
-          let loadedElements = JSON.parse(localStorage.getItem('Items'))
+          let loadedElements = getTodos()
 
-          for (const arrayElement of loadedElements) {
-            if (arrayElement.isActive === false || element.checked === true) {
+          for (const item of todos) {
+            if (item.isActive === false || element.checked === true) {
 
-              let checkBox = document.querySelector(`[todo-id='${arrayElement.id}']`)
+              let checkBox = document.querySelector(`[todo-id='${item.id}']`)
               let cardText = checkBox.nextSibling
               cardText.style.textDecoration = 'line-through'
               cardText.style.color = `var(--grayish-blue)`
               checkBox.checked = true
             } else {
-              let checkBox = document.querySelector(`[todo-id='${arrayElement.id}']`)
+              let checkBox = document.querySelector(`[todo-id='${item.id}']`)
               let cardText = checkBox.nextSibling
               cardText.style.textDecoration = 'none'
               cardText.style.color = 'white'
@@ -378,7 +378,7 @@
   }
 
   function addCard() {
-    let loadedElements = JSON.parse(localStorage.getItem('Items'))
+    let todos = JSON.parse(localStorage.getItem('Items'))
 
     const card = document.createElement('div') //main card container
     const left = document.createElement('div') //left card container
@@ -396,7 +396,7 @@
     const inputField = document.querySelector('.user-input')
     text.innerText = inputField.value //gets user input
     card.classList.add('card-style')
-    items.push({
+    todos.push({
       id: Date.now(),
       title: inputField.value,
       isActive: true,
@@ -411,10 +411,9 @@
     left.appendChild(text) //div -> left -> text
     card.appendChild(cross) // div -> cross
 
-    setTodos(items) //storing in local storage
+    setTodos(todos) //storing in local storage
+    itemsLeftAll()
   }
-
-
 
   function checkAll() {
     const cards = document.querySelectorAll('.card-style')
@@ -433,7 +432,7 @@
   }
 
   function itemsLeftAll() {
-    console.log("length for all is rn = " , JSON.parse(localStorage.getItem('Items')).length )
+    console.log('length for all is rn = ', JSON.parse(localStorage.getItem('Items')).length)
     document.querySelector('.count-items-left').innerText = JSON.parse(localStorage.getItem('Items')).length
   }
 
@@ -464,22 +463,20 @@
   }
 
   function checkCompleted() {
-    let loadedElements = getTodos()
-    const checkboxes = document.querySelectorAll('input[type=checkbox]')
+    let todos = getTodos()
+    // const checkboxes = document.querySelectorAll('input[type=checkbox]')
     let count = 0
-    console.log('loaded Elements', loadedElements)
-    console.log('checkboxes', checkboxes)
 
-    for (const loaded in loadedElements) {
-      if (loadedElements[loaded].isCompleted === false) {
-        let parentCard = checkboxes[loaded].parentNode.parentNode
-        parentCard.style.display = 'none'
-      } else {
-        let parentCard = checkboxes[loaded].parentNode.parentNode
-        parentCard.style.display = 'flex'
-      }
-      console.log('element.isActive is=', loadedElements[loaded].isActive)
-      if (loadedElements[loaded].isActive === false) {
+    for (const item in todos) {
+        if (todos[item].isCompleted === false) {
+          let parentCard = checkboxes[item].parentNode.parentNode
+          parentCard.style.display = 'none'
+        } else {
+          let parentCard = checkboxes[item].parentNode.parentNode
+          parentCard.style.display = 'flex'
+        }
+      console.log('element.isActive is=', todos[item].isActive)
+      if (todos[item].isActive === false) {
         count++
       }
     }
@@ -489,26 +486,20 @@
   }
 
   function clearCompleted() {
-    let loadedElements = JSON.parse(localStorage.getItem('Items'))
-    const checkboxes = document.querySelectorAll('input[type=checkbox]')
-    let count = 0
-    console.log('loaded Elements', loadedElements)
-    console.log('checkboxes', checkboxes)
+    let todos = getTodos()
+    // const checkboxes = document.querySelectorAll('input[type=checkbox]')
+    let updatedTodos = []
 
-    for (const loaded in loadedElements) {
+    updatedTodos = todos.filter(removeCompleted)
+    console.log('updated todo flags', updatedTodos)
+    document.querySelector('.count-items-left').innerText = updatedTodos.length
+    setTodos(updatedTodos)
 
-      if (loadedElements[loaded].isCompleted === true) {
-        let parentCard = checkboxes[loaded].parentNode.parentNode
-        parentCard.style.display = 'none'
-      }
-      console.log('element.isActive is=', loadedElements[loaded].isActive)
-      if (loadedElements[loaded].isActive === true) {
-        count++
-      }
-    }
+    location.reload()
+  }
 
-    document.querySelector('.count-items-left').innerText = count
-    console.log('now count is = ', count)
+  function removeCompleted(todo) {
+    return todo.isCompleted === false
   }
 
   function getTodos() {
@@ -518,6 +509,7 @@
   function setTodos(todos) {
     localStorage.setItem('Items', JSON.stringify(todos))
   }
+
 </script>
 
 </body>
