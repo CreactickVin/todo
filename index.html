@@ -255,12 +255,11 @@
 </div>
 
 <script>
-  const showContainer = document.querySelector('.todo-container')
+  const todoContainer = document.querySelector('.todo-container')
 
   let todos = getTodos()
 
   // fetches "items" from local storage and places it again on refresh
-
   for (const item of todos) {
     const card = document.createElement('div') //main card container
     const left = document.createElement('div') //left card container
@@ -279,7 +278,7 @@
     text.innerText = item.title //setting inner-text as array element
     card.classList.add('card-style') //applying card style
 
-    showContainer.appendChild(card) //creating main card container
+    todoContainer.appendChild(card) //creating main card container
     card.appendChild(left) //div -> left
     left.classList.add('left-card-div')
     left.appendChild(checkBox) //div -> left -> checkbox
@@ -290,38 +289,25 @@
   //initial items-left count
   itemsLeftAll()
 
-  // const showDataContainer = document.querySelector('.todo-container')
-  // function itemsLeftActive() {
-  //   getTodos()
-  //   let count = 0
-  //   for (const element in loadedElements) {
-  //     console.log('element.isActive is=', loadedElements[element].isActive)
-  //     if (loadedElements[element].isActive) {
-  //       count++
-  //     }
-  //   }
-  //   document.querySelector('.count-items-left').innerText = count
-  //   console.log('now count is = ', count)
-  // }
-
   //updates Items value in local storage for checked &  unchecked checkbox
   const checkboxes = document.querySelectorAll('input[type=checkbox]')
   for (const checkElement of checkboxes) {
     checkElement.addEventListener('click', function(element) {
       let isChecked = element.target.checked
-      const idPlace = parseInt(element.target.getAttribute('todo-id'))
+      const idCheckBox = parseInt(element.target.getAttribute('todo-id'))
 
       getTodos()
 
-      for (const loaded in loadedElements) {
-        if (loadedElements[loaded].id === idPlace) {
+      for (const item in todos) {
+        if (todos[item].id === idCheckBox) {
           // Change isActive to false, isCompleted to true
-          loadedElements[loaded].isActive = !(isChecked)
-          loadedElements[loaded].isCompleted = (isChecked)
+          todos[item].isActive = !(isChecked)
+          todos[item].isCompleted = (isChecked)
         }
       }
 
-      setTodos(loadedElements)
+      setTodos(todos)
+
     })
   }
 
@@ -332,49 +318,23 @@
   })
 
   //adds strikethrough to checked values
-  for (const checkbx of checkboxes) {
-    checkbx.addEventListener('change', function(element) {
-          let loadedElements = JSON.parse(localStorage.getItem('Items'))
+  for (const checkbox of checkboxes) {
+    //applies strikethrough to elements
+    checkbox.addEventListener('change', function(element) {
+      console.log('eleement log -->', element)
+      for (const item of todos) {
+        setStrikethrough(item, item.isActive)
+      }
+    })
 
-          for (const arrayElement of loadedElements) {
-            if (arrayElement.isActive === false || element.checked === true) {
-              let checkBox = document.querySelector(`[todo-id='${arrayElement.id}']`)
-              let cardText = checkBox.nextSibling
-              cardText.style.textDecoration = 'line-through'
-              cardText.style.color = `var(--grayish-blue)`
-            } else {
-              let checkBox = document.querySelector(`[todo-id='${arrayElement.id}']`)
-              let cardText = checkBox.nextSibling
-              cardText.style.textDecoration = 'none'
-              cardText.style.color = 'white'
-            }
-          }
-        }
-    )
-  }
-
-  for (const checkElement of checkboxes) {
+    //applies strikethrough to elements on "reload"
     window.addEventListener('load', function(element) {
-          let loadedElements = getTodos()
+      for (const item of todos) {
+        setStrikethrough(item, item.isActive)
 
-          for (const item of todos) {
-            if (item.isActive === false || element.checked === true) {
+      }
+    })
 
-              let checkBox = document.querySelector(`[todo-id='${item.id}']`)
-              let cardText = checkBox.nextSibling
-              cardText.style.textDecoration = 'line-through'
-              cardText.style.color = `var(--grayish-blue)`
-              checkBox.checked = true
-            } else {
-              let checkBox = document.querySelector(`[todo-id='${item.id}']`)
-              let cardText = checkBox.nextSibling
-              cardText.style.textDecoration = 'none'
-              cardText.style.color = 'white'
-              checkBox.checked = false
-            }
-          }
-        }
-    )
   }
 
   function addCard() {
@@ -404,7 +364,7 @@
     }) //pushes the input into the array
     inputField.value = '' //empties the input field
 
-    showContainer.appendChild(card) //creating main card container
+    todoContainer.appendChild(card) //creating main card container
     card.appendChild(left) //div -> left
     left.classList.add('left-card-div')
     left.appendChild(checkBox) //div -> left -> checkbox
@@ -420,12 +380,7 @@
 
     for (const element of cards) {
       console.log('all element', element)
-
-      if (element.hasAttribute('style')) {
-        element.setAttribute('style', 'flex')
-      } else {
-        element.style.display = 'flex'
-      }
+      element.style.display = 'flex'
     }
 
     itemsLeftAll()
@@ -468,13 +423,13 @@
     let count = 0
 
     for (const item in todos) {
-        if (todos[item].isCompleted === false) {
-          let parentCard = checkboxes[item].parentNode.parentNode
-          parentCard.style.display = 'none'
-        } else {
-          let parentCard = checkboxes[item].parentNode.parentNode
-          parentCard.style.display = 'flex'
-        }
+      if (todos[item].isCompleted === false) {
+        let parentCard = checkboxes[item].parentNode.parentNode
+        parentCard.style.display = 'none'
+      } else {
+        let parentCard = checkboxes[item].parentNode.parentNode
+        parentCard.style.display = 'flex'
+      }
       console.log('element.isActive is=', todos[item].isActive)
       if (todos[item].isActive === false) {
         count++
@@ -500,6 +455,14 @@
 
   function removeCompleted(todo) {
     return todo.isCompleted === false
+  }
+
+  function setStrikethrough(item, flag) {
+    let checkBox = document.querySelector(`[todo-id='${item.id}']`)
+    let itemText = checkBox.nextSibling
+
+    itemText.style.textDecoration = flag ? 'line-through' : 'none'
+    itemText.style.color = flag ? `var(--grayish-blue)` : 'white'
   }
 
   function getTodos() {
