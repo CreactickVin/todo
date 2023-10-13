@@ -321,7 +321,7 @@
   for (const checkbox of checkboxes) {
     //applies strikethrough to elements
     checkbox.addEventListener('change', function(element) {
-      console.log('eleement log -->', element)
+      console.log('element log -->', element)
       for (const item of todos) {
         setStrikethrough(item, item.isActive)
       }
@@ -338,7 +338,7 @@
   }
 
   function addCard() {
-    let todos = JSON.parse(localStorage.getItem('Items'))
+    let todos = getTodos()
 
     const card = document.createElement('div') //main card container
     const left = document.createElement('div') //left card container
@@ -461,8 +461,8 @@
     let checkBox = document.querySelector(`[todo-id='${item.id}']`)
     let itemText = checkBox.nextSibling
 
-    itemText.style.textDecoration = flag ? 'line-through' : 'none'
-    itemText.style.color = flag ? `var(--grayish-blue)` : 'white'
+    itemText.style.textDecoration = flag ? 'none' : 'line-through'
+    itemText.style.color = flag ? 'white' : `var(--grayish-blue)`
   }
 
   function getTodos() {
