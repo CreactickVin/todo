@@ -293,7 +293,7 @@
   const checkboxes = document.querySelectorAll('input[type=checkbox]')
   for (const checkElement of checkboxes) {
     checkElement.addEventListener('click', function(element) {
-      let isChecked = element.target.checked
+
       const idCheckBox = parseInt(element.target.getAttribute('todo-id'))
 
       getTodos()
@@ -301,8 +301,8 @@
       for (const item in todos) {
         if (todos[item].id === idCheckBox) {
           // Change isActive to false, isCompleted to true
-          todos[item].isActive = !(isChecked)
-          todos[item].isCompleted = (isChecked)
+          todos[item].isActive = !(element.target.checked)
+          todos[item].isCompleted = (element.target.checked)
         }
       }
 
@@ -319,23 +319,29 @@
 
   //adds strikethrough to checked values
   for (const checkbox of checkboxes) {
-    //applies strikethrough to elements
     checkbox.addEventListener('change', function(element) {
       console.log('element log -->', element)
       for (const item of todos) {
-        setStrikethrough(item, item.isActive)
+        setStrikethrough(item, item.isCompleted)
       }
     })
-
-    //applies strikethrough to elements on "reload"
-    window.addEventListener('load', function(element) {
-      for (const item of todos) {
-        setStrikethrough(item, item.isActive)
-
-      }
-    })
-
   }
+
+  //applies strikethrough to elements on "reload"
+  window.addEventListener('load', function() {
+
+    for (const item of todos) {
+      if (item.isCompleted === true) {
+        for (const checkbox of checkboxes) {
+          if (item.id ===  parseInt(checkbox.getAttribute('todo-id'))) {
+            checkbox.checked = true
+          }
+        }
+      }
+      setStrikethrough(item, item.isCompleted)
+    }
+
+  })
 
   function addCard() {
     let todos = getTodos()
@@ -400,14 +406,15 @@
 
     for (const loaded in loadedElements) {
 
-      if (loadedElements[loaded].isActive === false) {
-        let parentCard = checkboxes[loaded].parentNode.parentNode
-        parentCard.style.display = 'none'
-      } else {
+      if (loadedElements[loaded].isActive === true) {
         let parentCard = checkboxes[loaded].parentNode.parentNode
         parentCard.style.display = 'flex'
+      } else {
+        let parentCard = checkboxes[loaded].parentNode.parentNode
+        parentCard.style.display = 'none'
       }
       console.log('element.isActive is=', loadedElements[loaded].isActive)
+
       if (loadedElements[loaded].isActive) {
         count++
       }
@@ -461,8 +468,8 @@
     let checkBox = document.querySelector(`[todo-id='${item.id}']`)
     let itemText = checkBox.nextSibling
 
-    itemText.style.textDecoration = flag ? 'none' : 'line-through'
-    itemText.style.color = flag ? 'white' : `var(--grayish-blue)`
+    itemText.style.textDecoration = flag ? 'line-through' : 'none'
+    itemText.style.color = flag ? 'var(--grayish-blue)' : 'white'
   }
 
   function getTodos() {
