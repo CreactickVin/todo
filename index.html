@@ -2,13 +2,13 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;700&display=swap" rel="stylesheet"/>
 
   <title>Todo app</title>
 
@@ -81,7 +81,7 @@
     /*}*/
 
     .container {
-      width: 480px;
+      width: 500px;
       padding: 20px 0;
     }
 
@@ -126,20 +126,13 @@
     }
 
     .todo-container {
-      border-radius: 4px;
       background: var(--card-background-very-dark-blue);
       margin-top: 20px;
-    }
-
-    .todo-container:nth-child(1),
-    .todo-container:nth-last-child(1) {
-      border-radius: 4px;
+      border-radius: 4px 4px 0 0;
     }
 
     .card-style {
       padding: 20px;
-      background: var(--card-background-very-dark-blue);
-      color: var(--card-text-light-gray);
       overflow-wrap: break-word;
       border-bottom: 1px solid var(--very-dark-gray);
       font-family: "Josefin Sans", sans-serif;
@@ -151,7 +144,7 @@
       display: flex;
     }
 
-    .left-card-div>p {
+    .left-card-div > p {
       margin-left: 10px;
     }
 
@@ -168,6 +161,11 @@
       display: flex;
       font-family: "Josefin Sans", sans-serif;
       justify-content: space-between;
+    }
+
+    .items-left {
+      font-size: 14px;
+      color: var(--grayish-blue);
     }
 
     .btn-footer-container {
@@ -192,7 +190,7 @@
       color: var(--primary-bright-blue);
     }
 
-    .utility-btn {
+    .btn-bold {
       font-weight: 700;
     }
 
@@ -217,301 +215,293 @@
 </head>
 
 <body>
-  <div class="container">
-    <div class="heading-container">
-      <h1>TODO</h1>
-      <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26">
-        <path fill="#FFF" fill-rule="evenodd"
-          d="M13 21a1 1 0 011 1v3a1 1 0 11-2 0v-3a1 1 0 011-1zm-5.657-2.343a1 1 0 010 1.414l-2.121 2.121a1 1 0 01-1.414-1.414l2.12-2.121a1 1 0 011.415 0zm12.728 0l2.121 2.121a1 1 0 01-1.414 1.414l-2.121-2.12a1 1 0 011.414-1.415zM13 8a5 5 0 110 10 5 5 0 010-10zm12 4a1 1 0 110 2h-3a1 1 0 110-2h3zM4 12a1 1 0 110 2H1a1 1 0 110-2h3zm18.192-8.192a1 1 0 010 1.414l-2.12 2.121a1 1 0 01-1.415-1.414l2.121-2.121a1 1 0 011.414 0zm-16.97 0l2.121 2.12A1 1 0 015.93 7.344L3.808 5.222a1 1 0 011.414-1.414zM13 0a1 1 0 011 1v3a1 1 0 11-2 0V1a1 1 0 011-1z" />
-      </svg>
-    </div>
+<div class="container">
+  <div class="heading-container">
+    <h1>TODO</h1>
+    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26">
+      <path fill="#FFF" fill-rule="evenodd"
+            d="M13 21a1 1 0 011 1v3a1 1 0 11-2 0v-3a1 1 0 011-1zm-5.657-2.343a1 1 0 010 1.414l-2.121 2.121a1 1 0 01-1.414-1.414l2.12-2.121a1 1 0 011.415 0zm12.728 0l2.121 2.121a1 1 0 01-1.414 1.414l-2.121-2.12a1 1 0 011.414-1.415zM13 8a5 5 0 110 10 5 5 0 010-10zm12 4a1 1 0 110 2h-3a1 1 0 110-2h3zM4 12a1 1 0 110 2H1a1 1 0 110-2h3zm18.192-8.192a1 1 0 010 1.414l-2.12 2.121a1 1 0 01-1.415-1.414l2.121-2.121a1 1 0 011.414 0zm-16.97 0l2.121 2.12A1 1 0 015.93 7.344L3.808 5.222a1 1 0 011.414-1.414zM13 0a1 1 0 011 1v3a1 1 0 11-2 0V1a1 1 0 011-1z"/>
+    </svg>
+  </div>
 
-    <div class="add-data-container">
-      <input class="user-input" placeholder="Create a new todo..." type="text" />
-      <button class="btn-enter" onclick="addCard()">Enter</button>
-    </div>
+  <div class="add-data-container">
+    <input class="user-input" placeholder="Create a new todo..." type="text"/>
+    <button class="btn-enter" onclick="addCard()">Enter</button>
+  </div>
 
-    <div class="todo-container"></div>
+  <div class="todo-container"></div>
 
-    <div class="footer-card">
+  <div class="footer-card">
       <span class="items-left">
         <span class="count-items-left">x</span> items left
       </span>
-      <div class="btn-footer-container">
-        <button class="btn-footer utility-btn btn-blue" onclick="checkAll()">All</button>
-        <button class="btn-footer utility-btn" onclick="checkActive()">
-          Active
-        </button>
-        <button class="btn-footer utility-btn" onclick="checkCompleted()">Completed</button>
-      </div>
-      <button class="btn-footer" onclick="clearCompleted()">Clear Completed</button>
+    <div class="btn-footer-container">
+      <button class="btn-footer btn-bold btn-blue" onclick="checkAll()">All</button>
+      <button class="btn-footer btn-bold" onclick="checkActive()">
+        Active
+      </button>
+      <button class="btn-footer btn-bold" onclick="checkCompleted()">Completed</button>
     </div>
-
-    <div class="footer-suggestion">
-      <p>Drag and Drop to reorder list</p>
-    </div>
+    <button class="btn-footer" onclick="clearCompleted()">Clear Completed</button>
   </div>
 
-  <script>
-    const todoContainer = document.querySelector('.todo-container')
+  <div class="footer-suggestion">
+    <p>Drag and Drop to reorder list</p>
+  </div>
+</div>
 
+<script>
+  const todoContainer = document.querySelector('.todo-container')
+
+  let todos = getTodos()
+
+  // fetches "items" from local storage and places it again on refresh
+  for (const item of todos) {
+    const card = document.createElement('div') //main card container
+    const left = document.createElement('div') //left card container
+    const checkBox = document.createElement('input')
+
+    checkBox.setAttribute('type', 'checkbox')
+    checkBox.setAttribute('todo-id', item.id)
+
+    const text = document.createElement('p')
+    text.classList.add('items-description')
+
+    const cross = document.createElement('img')
+    cross.classList.add('cross-img')
+    cross.setAttribute('src', 'images/icon-cross.svg')
+    cross.setAttribute('button-id', item.id)
+
+    text.innerText = item.title //setting inner-text as array element
+    card.classList.add('card-style') //applying card style
+
+    card.appendChild(left) //div -> left
+    left.classList.add('left-card-div')
+    left.appendChild(checkBox) //div -> left -> checkbox
+    left.appendChild(text) //div -> left -> text
+    card.appendChild(cross) // div -> cross
+    todoContainer.appendChild(card) //creating main card container
+  }
+
+  //initial items-left count
+  itemsLeftAll()
+
+  //applies strikethrough to checked values & update local storage
+  const checkboxes = document.querySelectorAll('input[type=checkbox]')
+  for (const checkbox of checkboxes) {
+    checkbox.addEventListener('click', function(element) {
+
+      let todos = getTodos()
+
+      for (const item of todos) {
+        if (item.id === element.target.attributes[1].value) {
+          // Change isActive to false, isCompleted to true
+          item.isActive = !(element.target.checked)
+          item.isCompleted = (element.target.checked)
+        }
+      }
+      console.log("normal todos", todos)
+      setStrikethrough(element, element.target.checked)
+      setTodos(todos)
+    })
+  }
+
+  //applies strikethrough & checked to elements on "reload"
+  window.addEventListener('load', function(element) {
+    console.log('reload strikethrough element-->', element)
+
+    for (const item of todos) {
+      if (item.isCompleted === true) {
+        for (const checkbox of checkboxes) {
+          if (item.id === checkbox.getAttribute('todo-id')) {
+            checkbox.checked = true
+          }
+        }
+      }
+    }
+    setStrikethroughReload()
+  })
+
+  document.querySelector('.user-input').addEventListener('keypress', function(value) {
+    if (value.key === 'Enter') {
+      addCard()
+    }
+  })
+
+  //remove the item from display
+  const crossButtons = document.querySelectorAll('img > .cross-img')
+  for (const crossButton of crossButtons) {
+    crossButton.addEventListener('click', function(e) {
+      for (let item = 0; item < todos.length; item++) {
+        const element = todos[item]
+        console.log('deep-inside >>>', element.id, parseInt(e.target.attributes['button-id'].value))
+        if (element.id === parseInt(e.target.attributes['button-id'].value)) {
+          todos.splice(item, 1)
+        }
+      }
+      console.log('now todos is ----', todos)
+      let updatedTodos = todos.flat()
+      setTodos(updatedTodos)
+      location.reload()
+    })
+  }
+
+  function addCard() {
+    let todos = getTodos()
+    const uniqueID = String(Date.now())
+
+    const card = document.createElement('div') //main card container
+    const left = document.createElement('div') //left card container
+    const checkBox = document.createElement('input')
+    checkBox.setAttribute('type', 'checkbox')
+    checkBox.setAttribute('todo-id', uniqueID)
+
+
+    //apply strikethrough & update key for newly added items
+    checkBox.addEventListener('click', function(element) {
+      let todos = getTodos()
+      for (const item of todos) {
+        if (item.id === element.target.attributes[1].value) {
+          console.log('condition is true', item.id, element.target.attributes[1].value)
+
+          // Change isActive to false, isCompleted to true
+          item.isActive = !(element.target.checked)
+          item.isCompleted = (element.target.checked)
+        }
+      }
+      setStrikethrough(element, element.target.checked)
+      console.log('updated todos', todos)
+      setTodos(todos)
+    })
+
+    const text = document.createElement('p')
+    text.classList.add('items-description')
+
+    const cross = document.createElement('img')
+    cross.classList.add('cross-img')
+    cross.setAttribute('src', 'images/icon-cross.svg')
+    cross.setAttribute('button-id', uniqueID)
+
+    const inputField = document.querySelector('.user-input')
+    text.innerText = inputField.value //gets user input
+    card.classList.add('card-style')
+    todos.push({
+      id: uniqueID,
+      title: inputField.value,
+      isActive: true,
+      isCompleted: false
+    }) //pushes the input into the array
+    inputField.value = '' //empties the input field
+
+    todoContainer.appendChild(card) //creating main card container
+    card.appendChild(left) //div -> left
+    left.classList.add('left-card-div')
+    left.appendChild(checkBox) //div -> left -> checkbox
+    left.appendChild(text) //div -> left -> text
+    card.appendChild(cross) // div -> cross
+
+    setTodos(todos) //storing in local storage
+    itemsLeftAll()
+  }
+
+  function checkAll() {
+    const cards = document.querySelectorAll('.card-style')
+
+    for (const element of cards) {
+      console.log('all element', element)
+      element.style.display = 'flex'
+    }
+
+    itemsLeftAll()
+  }
+
+  function itemsLeftAll() {
+    document.querySelector('.count-items-left').innerText = getTodos().length
+  }
+
+  function checkActive() {
+    let todos = getTodos()
+    const checkboxes = document.querySelectorAll('input[type=checkbox]')
+    let count = 0
+    console.log('loaded Elements', todos)
+    console.log('checkboxes', checkboxes)
+
+    for (const item in todos) {
+      let parentCard = checkboxes[item].parentNode.parentNode
+      parentCard.style.display = (todos[item].isActive === false) ? 'none' : 'flex'
+      if (todos[item].isActive === true) {
+        count++
+      }
+    }
+
+    document.querySelector('.count-items-left').innerText = count
+    console.log('now count is = ', count)
+  }
+
+  function checkCompleted() {
+    let todos = getTodos()
+    let count = 0
+
+    for (const item in todos) {
+      let parentCard = checkboxes[item].parentNode.parentNode
+      parentCard.style.display = (todos[item].isCompleted === false) ? 'none' : 'flex'
+      if (todos[item].isCompleted === true) {
+        count++
+      }
+    }
+
+    document.querySelector('.count-items-left').innerText = count
+    console.log('now count is = ', count)
+  }
+
+  function clearCompleted() {
+    let todos = getTodos()
+    let updatedTodos = []
+
+    updatedTodos = todos.filter(removeCompleted)
+    document.querySelector('.count-items-left').innerText = updatedTodos.length
+    setTodos(updatedTodos)
+
+    location.reload()
+
+    itemsLeftAll()
+  }
+
+  function removeCompleted(todo) {
+    return todo.isCompleted === false
+  }
+
+  function setStrikethrough(element, flag) {
+    let checkBox = document.querySelector(`[todo-id='${element.target.attributes[1].value}']`)
+    let Text = checkBox.nextSibling
+
+    Text.style.textDecoration = flag ? 'line-through' : 'none'
+    Text.style.color = flag ? 'var(--grayish-blue)' : 'white'
+  }
+
+  function setStrikethroughReload() {
     let todos = getTodos()
 
-    // fetches "items" from local storage and places it again on refresh
-    for (const item of todos) {
-      const card = document.createElement('div') //main card container
-      const left = document.createElement('div') //left card container
-      const checkBox = document.createElement('input')
+    for (const todo of todos) {
+      if (todo.isCompleted) {
+        let checkBox = document.querySelector(`[todo-id='${todo.id}']`)
+        let Text = checkBox.nextSibling
 
-      checkBox.setAttribute('type', 'checkbox')
-      checkBox.setAttribute('todo-id', item.id)
-
-      const text = document.createElement('p')
-      text.classList.add('items-description')
-
-      const cross = document.createElement('img')
-      cross.classList.add('cross-img')
-      cross.setAttribute('src', 'images/icon-cross.svg')
-      cross.setAttribute('button-id', item.id)
-
-      text.innerText = item.title //setting inner-text as array element
-      card.classList.add('card-style') //applying card style
-
-      card.appendChild(left) //div -> left
-      left.classList.add('left-card-div')
-      left.appendChild(checkBox) //div -> left -> checkbox
-      left.appendChild(text) //div -> left -> text
-      card.appendChild(cross) // div -> cross
-      todoContainer.appendChild(card) //creating main card container
-    }
-
-    //initial items-left count
-    itemsLeftAll()
-
-    //updates Items value in local storage for checked &  unchecked checkbox
-    const checkboxes = document.querySelectorAll('input[type=checkbox]')
-    for (const checkElement of checkboxes) {
-      checkElement.addEventListener('click', function (element) {
-        const idCheckBox = parseInt(element.target.getAttribute('todo-id'))
-        getTodos()
-
-        for (const item in todos) {
-          if (todos[item].id === idCheckBox) {
-            // Change isActive to false, isCompleted to true
-            todos[item].isActive = !(element.target.checked)
-            todos[item].isCompleted = (element.target.checked)
-          }
-        }
-
-        setTodos(todos)
-      })
-    }
-
-    document.querySelector('.user-input').addEventListener('keypress', function (value) {
-      if (value.key === 'Enter') {
-        addCard()
-      }
-    })
-
-    //applies strikethrough to checked values
-    for (const checkbox of checkboxes) {
-      checkbox.addEventListener('change', function (element) {
-        console.log('element log -->', element)
-        for (const item of todos) {
-          setStrikethrough(item, item.isCompleted)
-        }
-      })
-    }
-
-    //applies strikethrough to elements on "reload"
-    window.addEventListener('load', function () {
-
-      for (const item of todos) {
-        if (item.isCompleted === true) {
-          for (const checkbox of checkboxes) {
-            if (item.id === parseInt(checkbox.getAttribute('todo-id'))) {
-              checkbox.checked = true
-            }
-          }
-        }
-        setStrikethrough(item, item.isCompleted)
-      }
-
-    })
-
-    //remove the item from display
-    const crossButtons = document.querySelectorAll('img > .cross-img')
-    for (const crossButton of crossButtons) {
-      crossButton.addEventListener('click', function (e) {
-        for (let item = 0; item < todos.length; item++) {
-          const element = todos[item];
-          console.log("deep-inside >>>", element.id, parseInt(e.target.attributes['button-id'].value));
-          if (element.id === parseInt(e.target.attributes['button-id'].value)) {
-            todos.splice(item, 1)
-          }
-        }
-        console.log("now todos is ----", todos);
-        updatedTodos = todos.flat()
-        setTodos(updatedTodos)
-        updateCards()
-      })
-    }
-
-    function addCard() {
-      let todos = getTodos()
-      const uniqueID = String(Date.now())
-
-      const card = document.createElement('div') //main card container
-      const left = document.createElement('div') //left card container
-      const checkBox = document.createElement('input')
-      checkBox.setAttribute('type', 'checkbox')
-      checkBox.setAttribute('todo-id', uniqueID)
-
-      const text = document.createElement('p')
-      text.classList.add('items-description')
-
-      const cross = document.createElement('img')
-      cross.classList.add('cross-img')
-      cross.setAttribute('src', 'images/icon-cross.svg')
-      cross.setAttribute('button-id', uniqueID)
-
-      const inputField = document.querySelector('.user-input')
-      text.innerText = inputField.value //gets user input
-      card.classList.add('card-style')
-      todos.push({
-        id: Date.now(),
-        title: inputField.value,
-        isActive: true,
-        isCompleted: false
-      }) //pushes the input into the array
-      inputField.value = '' //empties the input field
-
-      todoContainer.appendChild(card) //creating main card container
-      card.appendChild(left) //div -> left
-      left.classList.add('left-card-div')
-      left.appendChild(checkBox) //div -> left -> checkbox
-      left.appendChild(text) //div -> left -> text
-      card.appendChild(cross) // div -> cross
-
-      setTodos(todos) //storing in local storage
-      itemsLeftAll()
-    }
-
-    function checkAll() {
-      const cards = document.querySelectorAll('.card-style')
-
-      for (const element of cards) {
-        console.log('all element', element)
-        element.style.display = 'flex'
-      }
-
-      itemsLeftAll()
-    }
-
-    function itemsLeftAll() {
-      console.log('length for all is rn = ', JSON.parse(localStorage.getItem('Items')).length)
-      document.querySelector('.count-items-left').innerText = JSON.parse(localStorage.getItem('Items')).length
-    }
-
-    function checkActive() {
-      let todos = getTodos()
-      const checkboxes = document.querySelectorAll('input[type=checkbox]')
-      let count = 0
-      console.log('loaded Elements', todos)
-      console.log('checkboxes', checkboxes)
-
-      for (const item in todos) {
-        let parentCard = checkboxes[item].parentNode.parentNode
-        parentCard.style.display = (todos[item].isActive === false) ? 'none' : 'flex'
-        if (todos[item].isActive === true) { count++ }
-      }
-
-      document.querySelector('.count-items-left').innerText = count
-      console.log('now count is = ', count)
-    }
-
-    function checkCompleted() {
-      let todos = getTodos()
-      let count = 0
-
-      for (const item in todos) {
-        let parentCard = checkboxes[item].parentNode.parentNode
-        parentCard.style.display = (todos[item].isCompleted === false) ? 'none' : 'flex'
-        if (todos[item].isCompleted === true) { count++ }
-      }
-
-      document.querySelector('.count-items-left').innerText = count
-      console.log('now count is = ', count)
-    }
-
-    function clearCompleted() {
-      let todos = getTodos()
-      let updatedTodos = []
-
-      updatedTodos = todos.filter(removeCompleted)
-      document.querySelector('.count-items-left').innerText = updatedTodos.length
-      setTodos(updatedTodos)
-
-      updateCards()
-
-      itemsLeftAll()
-    }
-
-    function removeCompleted(todo) {
-      return todo.isCompleted === false
-    }
-
-    function setStrikethrough(item, flag) {
-      let checkBox = document.querySelector(`[todo-id='${item.id}']`)
-      let itemText = checkBox.nextSibling
-
-      itemText.style.textDecoration = flag ? 'line-through' : 'none'
-      itemText.style.color = flag ? 'var(--grayish-blue)' : 'white'
-    }
-
-    function updateCards() {
-      todoContainer.innerHTML = '';
-
-      const todos = getTodos()
-      for (const item of todos) {
-
-        const card = document.createElement('div') //main card container
-        const left = document.createElement('div') //left card container
-        const checkBox = document.createElement('input')
-
-        checkBox.setAttribute('type', 'checkbox')
-        checkBox.setAttribute('todo-id', item.id)
-
-
-        const text = document.createElement('p')
-        text.classList.add('items-description')
-
-        const cross = document.createElement('img')
-        cross.classList.add('cross-img')
-        cross.setAttribute('src', 'images/icon-cross.svg')
-        cross.setAttribute('button-id', item.id)
-
-        text.innerText = item.title //setting inner-text as array element
-        card.classList.add('card-style') //applying card style
-
-        todoContainer.appendChild(card) //creating main card container
-        card.appendChild(left) //div -> left
-        left.classList.add('left-card-div')
-        left.appendChild(checkBox) //div -> left -> checkbox
-        left.appendChild(text) //div -> left -> text
-        card.appendChild(cross) // div -> cross
+        Text.style.textDecoration = 'line-through'
+        Text.style.color = 'var(--grayish-blue)'
       }
     }
+  }
 
-    function getTodos() {
-      return JSON.parse(localStorage.getItem('Items'))
-    }
+  function getTodos() {
+    return JSON.parse(localStorage.getItem('Items')) || []
+  }
 
-    function setTodos(todos) {
-      localStorage.setItem('Items', JSON.stringify(todos))
-    }
+  function setTodos(todos) {
+    localStorage.setItem('Items', JSON.stringify(todos))
+  }
 
-  </script>
+</script>
 
 </body>
 
