@@ -270,7 +270,7 @@
     const cross = document.createElement('img')
     cross.classList.add('cross-img')
     cross.setAttribute('src', 'images/icon-cross.svg')
-    cross.setAttribute('button-id', item.id)
+    cross.setAttribute('onclick', `removeCross('${item.id}')`)
 
     text.innerText = item.title //setting inner-text as array element
     card.classList.add('card-style') //applying card style
@@ -286,7 +286,7 @@
   //initial items-left count
   itemsLeftAll()
 
-  //applies strikethrough to checked values & update local storage
+  //applies strikethrough on click  & update local storage
   const checkboxes = document.querySelectorAll('input[type=checkbox]')
   for (const checkbox of checkboxes) {
     checkbox.addEventListener('click', function(element) {
@@ -300,15 +300,14 @@
           item.isCompleted = (element.target.checked)
         }
       }
-      console.log("normal todos", todos)
+      console.log('normal todos', todos)
       setStrikethrough(element, element.target.checked)
       setTodos(todos)
     })
   }
 
-  //applies strikethrough & checked to elements on "reload"
-  window.addEventListener('load', function(element) {
-    console.log('reload strikethrough element-->', element)
+  //applies strikethrough on click to elements on "reload"
+  window.addEventListener('load', function() {
 
     for (const item of todos) {
       if (item.isCompleted === true) {
@@ -332,11 +331,11 @@
   const crossButtons = document.querySelectorAll('img > .cross-img')
   for (const crossButton of crossButtons) {
     crossButton.addEventListener('click', function(e) {
-      for (let item = 0; item < todos.length; item++) {
-        const element = todos[item]
+      for (let todo = 0; todo < todos.length; todo++) {
+        const element = todos[todo]
         console.log('deep-inside >>>', element.id, parseInt(e.target.attributes['button-id'].value))
         if (element.id === parseInt(e.target.attributes['button-id'].value)) {
-          todos.splice(item, 1)
+          todos.splice(todo, 1)
         }
       }
       console.log('now todos is ----', todos)
@@ -354,8 +353,7 @@
     const left = document.createElement('div') //left card container
     const checkBox = document.createElement('input')
     checkBox.setAttribute('type', 'checkbox')
-    checkBox.setAttribute('todo-id', uniqueID)
-
+    checkBox.setAttribute('todo-id', `${uniqueID}`)
 
     //apply strikethrough & update key for newly added items
     checkBox.addEventListener('click', function(element) {
@@ -380,7 +378,7 @@
     const cross = document.createElement('img')
     cross.classList.add('cross-img')
     cross.setAttribute('src', 'images/icon-cross.svg')
-    cross.setAttribute('button-id', uniqueID)
+    cross.setAttribute('onclick', `removeCross('${uniqueID}')`)
 
     const inputField = document.querySelector('.user-input')
     text.innerText = inputField.value //gets user input
@@ -456,9 +454,8 @@
 
   function clearCompleted() {
     let todos = getTodos()
-    let updatedTodos = []
 
-    updatedTodos = todos.filter(removeCompleted)
+    let updatedTodos = todos.filter(removeCompleted)
     document.querySelector('.count-items-left').innerText = updatedTodos.length
     setTodos(updatedTodos)
 
@@ -491,6 +488,23 @@
         Text.style.color = 'var(--grayish-blue)'
       }
     }
+  }
+
+  function removeCross(buttonId) {
+    let todos = getTodos()
+
+    for (let todo = 0; todo < todos.length; todo++) {
+      console.log("remove cross log", todos[todo].id, buttonId, typeof todos[todo].id, typeof buttonId)
+      if (todos[todo].id === buttonId) {
+        todos.splice(todo, 1)
+      }
+    }
+
+    let updatedTodos = todos.flat()
+
+    setTodos(updatedTodos)
+    location.reload()
+
   }
 
   function getTodos() {
