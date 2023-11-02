@@ -116,6 +116,7 @@
     }
 
     .btn-enter {
+      cursor: pointer;
       background-color: var(--card-background-very-dark-blue);
       color: var(--card-text-light-gray);
       border: none;
@@ -149,6 +150,7 @@
     }
 
     .cross-img {
+      cursor: pointer;
       height: 18px;
       width: 18px;
     }
@@ -175,6 +177,7 @@
     }
 
     .btn-footer {
+      cursor: pointer;
       border: none;
       background: var(--card-background-very-dark-blue);
       color: var(--grayish-blue);
@@ -204,6 +207,10 @@
       align-items: center;
     }
 
+    input[type="checkbox"] {
+      cursor: pointer;
+    }
+
     @media only screen and (max-width: 375px) {
       body {
         margin: 20px;
@@ -225,7 +232,7 @@
   </div>
 
   <div class="add-data-container">
-    <input class="user-input" placeholder="Create a new todo..." type="text"/>
+    <input class="user-input" placeholder="Create a new todo..." type="text" onkeypress="handleInput(event)"/>
     <button class="btn-enter" onclick="addCard()">Enter</button>
   </div>
 
@@ -251,6 +258,8 @@
 </div>
 
 <script>
+
+  const todoItemsCount = document.querySelector('.count-items-left')
   const todoContainer = document.querySelector('.todo-container')
 
   let todos = getTodos()
@@ -287,45 +296,51 @@
   itemsLeftAll()
 
   //applies strikethrough on click  & update local storage
-  const checkboxes = document.querySelectorAll('input[type=checkbox]')
+  const checkboxes = getCheckboxes()
   for (const checkbox of checkboxes) {
     checkbox.addEventListener('click', function(element) {
 
       let todos = getTodos()
 
-      for (const item of todos) {
-        if (item.id === element.target.attributes[1].value) {
-          // Change isActive to false, isCompleted to true
-          item.isActive = !(element.target.checked)
-          item.isCompleted = (element.target.checked)
-        }
+      const todoItem = todos.find((todo) => todo.id === element.target.attributes[1].value)
+
+      if (todoItem) {
+        todoItem.isActive = !(element.target.checked)
+        todoItem.isCompleted = (element.target.checked)
       }
-      console.log('normal todos', todos)
+
       setStrikethrough(element, element.target.checked)
       setTodos(todos)
     })
   }
 
-  //applies strikethrough on click to elements on "reload"
+  // applies strikethrough on click to elements on "reload"
   window.addEventListener('load', function() {
 
-    for (const item of todos) {
-      if (item.isCompleted === true) {
-        for (const checkbox of checkboxes) {
-          if (item.id === checkbox.getAttribute('todo-id')) {
-            checkbox.checked = true
-          }
-        }
+    todos.forEach((todo) => {
+      if(todo.isCompleted) {
+        checkboxes.forEach( (checkbox) =>  { if(checkbox.getAttribute(`${todo.id}`)) {checkbox.checked = true} })
       }
-    }
+    })
+
+    // for (const item of todos) {
+    //   if (item.isCompleted) {
+    //     for (const checkbox of checkboxes) {
+    //       if (item.id === checkbox.getAttribute('todo-id')) {
+    //         checkbox.checked = true
+    //       }
+    //     }
+    //   }
+    // }
+
     setStrikethroughReload()
   })
 
-  document.querySelector('.user-input').addEventListener('keypress', function(value) {
-    if (value.key === 'Enter') {
+  function handleInput(event) {
+    if (event.target.value && event.key === 'Enter') {
       addCard()
     }
-  })
+  }
 
   //remove the item from display
   const crossButtons = document.querySelectorAll('img > .cross-img')
@@ -414,12 +429,12 @@
   }
 
   function itemsLeftAll() {
-    document.querySelector('.count-items-left').innerText = getTodos().length
+    todoItemsCount.innerText = getTodos().length
   }
 
   function checkActive() {
     let todos = getTodos()
-    const checkboxes = document.querySelectorAll('input[type=checkbox]')
+    const checkboxes = getCheckboxes()
     let count = 0
     console.log('loaded Elements', todos)
     console.log('checkboxes', checkboxes)
@@ -432,23 +447,31 @@
       }
     }
 
-    document.querySelector('.count-items-left').innerText = count
+    todoItemsCount.innerText = count
     console.log('now count is = ', count)
   }
 
   function checkCompleted() {
     let todos = getTodos()
+    const checkboxes = getCheckboxes()
     let count = 0
 
-    for (const item in todos) {
-      let parentCard = checkboxes[item].parentNode.parentNode
-      parentCard.style.display = (todos[item].isCompleted === false) ? 'none' : 'flex'
-      if (todos[item].isCompleted === true) {
+    console.log('checkboxes', checkboxes)
+    //find all iscompleted false, and set that card's style to none or flex
+    // todos.forEach((todo) => )
+
+    checkboxes.forEach((checkbox) => checkbox.parentNode.parentNode )
+
+    for (const todo of todos) {
+      console.log("evry card -->", checkboxes[todo].parentNode.parentNode);
+      // let parentCard = todo.parentNode.parentNode
+      // parentCard.style.display = (todo.isCompleted === false) ? 'none' : 'flex'
+      if (todo.isCompleted === true) {
         count++
       }
     }
 
-    document.querySelector('.count-items-left').innerText = count
+    todoItemsCount.innerText = count
     console.log('now count is = ', count)
   }
 
@@ -456,7 +479,7 @@
     let todos = getTodos()
 
     let updatedTodos = todos.filter(removeCompleted)
-    document.querySelector('.count-items-left').innerText = updatedTodos.length
+    todoItemsCount.innerText = updatedTodos.length
     setTodos(updatedTodos)
 
     location.reload()
@@ -494,7 +517,7 @@
     let todos = getTodos()
 
     for (let todo = 0; todo < todos.length; todo++) {
-      console.log("remove cross log", todos[todo].id, buttonId, typeof todos[todo].id, typeof buttonId)
+      console.log('remove cross log', todos[todo].id, buttonId, typeof todos[todo].id, typeof buttonId)
       if (todos[todo].id === buttonId) {
         todos.splice(todo, 1)
       }
@@ -504,7 +527,10 @@
 
     setTodos(updatedTodos)
     location.reload()
+  }
 
+  function getCheckboxes() {
+    return document.querySelectorAll('input[type=checkbox]')
   }
 
   function getTodos() {
