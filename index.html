@@ -233,7 +233,7 @@
 
     <div class="add-data-container">
       <input class="user-input" placeholder="Create a new todo..." type="text" onkeypress="handleInput(event)" />
-      <button class="btn-enter" onclick="addCard()">Enter</button>
+      <button class="btn-enter" onkeypress="handleInput(event)">Enter</button>
     </div>
 
     <div class="todo-container"></div>
@@ -261,6 +261,7 @@
 
     const todoItemsCount = document.querySelector('.count-items-left')
     const todoContainer = document.querySelector('.todo-container')
+
 
     let todos = getTodos()
 
@@ -325,27 +326,9 @@
     })
 
     function handleInput(event) {
-      if (event.target.value && event.key === 'Enter') {
+     if (event.target.value && event.key === 'Enter') {
         addCard()
       }
-    }
-
-    //remove the item from display
-    const crossButtons = document.querySelectorAll('img > .cross-img')
-    for (const crossButton of crossButtons) {
-      crossButton.addEventListener('click', function (e) {
-        for (let todo = 0; todo < todos.length; todo++) {
-          const element = todos[todo]
-          console.log('deep-inside >>>', element.id, parseInt(e.target.attributes['button-id'].value))
-          if (element.id === parseInt(e.target.attributes['button-id'].value)) {
-            todos.splice(todo, 1)
-          }
-        }
-        console.log('now todos is ----', todos)
-        let updatedTodos = todos.flat()
-        setTodos(updatedTodos)
-        location.reload()
-      })
     }
 
     function addCard() {
@@ -405,7 +388,7 @@
     function checkAll() {
       const todos = document.querySelectorAll('.card-style')
 
-      for (const todo of cards) {
+      for (const todo of todos) {
         todo.style.display = 'flex'
       }
 
@@ -476,14 +459,13 @@
     function removeCrossTodo(buttonId) {
       let todos = getTodos()
 
-      for (let index = 0; index < todos.length; index++) {
-        if (todos[index].id === buttonId) {
-          todos.splice(index, 1)
-        }
-      }
+      let card = document.querySelector(`[todo-id="${buttonId}"]`).parentNode.parentNode
+      card.remove()
 
+      todos.splice(todos.findIndex((todo) => todo.id === buttonId), 1)
+      
       setTodos(todos)
-      location.reload()
+      itemsLeftAll()
     }
 
     function handleCardVisibility(todos, checkboxes, flag) {
