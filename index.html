@@ -401,10 +401,6 @@
     itemsLeftAll()
   }
 
-  function itemsLeftAll() {
-    todoItemsCount.innerText = getTodos().length
-  }
-
   function checkActive() {
     let todos = getTodos()
     const checkboxes = getCheckboxes()
@@ -434,6 +430,10 @@
 
     setTodos(updatedTodos)
     itemsLeftAll()
+  }
+
+  function itemsLeftAll() {
+    todoItemsCount.innerText = getTodos().length
   }
 
   function removeCompleted(todo) {
