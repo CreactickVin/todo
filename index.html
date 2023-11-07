@@ -33,7 +33,7 @@
     body {
       background-image: url("./images/bg-desktop-dark.jpg");
       background-repeat: no-repeat;
-      background-size: 100% 30%;
+      background-size: 100% 37%;
       background-color: var(--background-dark-blue);
       color: var(--card-text-light-gray);
       height: 100vh;
@@ -43,47 +43,8 @@
     }
 
     input[type=checkbox] {
-      /*position: relative;*/
       cursor: pointer;
     }
-
-    /*input[type=checkbox]:before {*/
-    /*  content: "";*/
-    /*  display: block;*/
-    /*  position: absolute;*/
-    /*  width: 16px;*/
-    /*  height: 16px;*/
-    /*  top: 0;*/
-    /*  left: -2px;*/
-    /*  border: 1px solid var(--very-dark-gray);*/
-    /*  border-radius: 10px;*/
-    /*  background-color: var(--card-background-very-dark-blue);*/
-    /*}*/
-
-    /*input[type='checkbox']:hover {*/
-    /*  background: var(--card-background-very-dark-blue);*/
-    /*  position: relative;*/
-    /*  background-clip: padding-box;*/
-    /*  border: solid 5px transparent;*/
-    /*  border-radius: 10px;*/
-    /*  top: 0;*/
-    /*}*/
-
-    /*input[type='checkbox']:hover:after {*/
-    /*  content: "";*/
-    /*  position: absolute;*/
-    /*  top: 0;*/
-    /*  right: 0;*/
-    /*  bottom: 0;*/
-    /*  left: 0;*/
-    /*  z-index: -1;*/
-    /*  margin: -5px;*/
-    /*  !* !important *!*/
-    /*  border-radius: inherit;*/
-    /*  !* !important *!*/
-    /*  background: linear-gradient(146deg, rgba(113, 180, 250, 1) 5%, rgba(160, 99, 255, 1) 100%);*/
-    /*}*/
-
 
     .container {
       width: 500px;
@@ -194,7 +155,7 @@
       color: var(--card-text-light-gray-hover);
     }
 
-    .btn-blue {
+    .btn-footer:focus {
       color: var(--primary-bright-blue);
     }
 
@@ -245,9 +206,7 @@
       </span>
     <div class="btn-footer-container">
       <button class="btn-footer btn-bold btn-blue" onclick="checkAll()">All</button>
-      <button class="btn-footer btn-bold" onclick="checkActive()">
-        Active
-      </button>
+      <button class="btn-footer btn-bold" onclick="checkActive()">Active</button>
       <button class="btn-footer btn-bold" onclick="checkCompleted()">Completed</button>
     </div>
     <button class="btn-footer" onclick="clearCompleted()">Clear Completed</button>
@@ -463,28 +422,34 @@
 
   function removeCrossTodo(buttonId) {
     let todos = getTodos()
+    let count = 0
 
     let card = document.querySelector(`[todo-id="${buttonId}"]`).parentNode.parentNode
     card.remove()
 
     todos.splice(todos.findIndex((todo) => todo.id === buttonId), 1)
-
     setTodos(todos)
-    itemsLeftAll()
+
+    let todoRows = document.querySelectorAll('.card-style')
+    for (const todoRow of todoRows) {
+      if(todoRow.style.display === 'flex' || '') {
+        count++
+      }
+    }
+    todoItemsCount.innerText = count
   }
 
-  function handleCardVisibility(todos, checkboxes, flag) {
+  function handleCardVisibility(todos, checkboxes, status) {
     let count = 0
 
     checkboxes.forEach((checkbox, index) => {
 
       let card = checkbox.parentNode.parentNode.style
-      card.display = todos[index][flag ? 'isActive' : 'isCompleted'] ? 'none' : 'flex'
+      card.display = todos[index][status ? 'isActive' : 'isCompleted'] ? 'none' : 'flex'
 
-      if (todos[index][flag ? 'isCompleted' : 'isActive']) {
+      if (todos[index][status ? 'isCompleted' : 'isActive']) {
         count++
       }
-
     })
 
     todoItemsCount.innerText = count
@@ -501,7 +466,6 @@
   function setTodos(todos) {
     localStorage.setItem('Items', JSON.stringify(todos))
   }
-
 </script>
 
 </body>
